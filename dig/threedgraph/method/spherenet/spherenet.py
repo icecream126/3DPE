@@ -11,7 +11,6 @@ from ...utils import xyz_to_dat
 from .features import dist_emb, angle_emb, torsion_emb
 # from torch_geometric.transforms.add_positional_encoding import AddRandomWalkPE
 
-### Laplacian Positional Encoding ###
 import numpy as np
 
 from torch_geometric.data import Data
@@ -38,202 +37,6 @@ from scipy import sparse
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-class AddLaplacianEigenvectorPE():
-    r"""Adds the Laplacian eigenvector positional encoding from the
-    `"Benchmarking Graph Neural Networks" <https://arxiv.org/abs/2003.00982>`_
-    paper to the given graph
-    (functional name: :obj:`add_laplacian_eigenvector_pe`).
-
-    Args:
-        k (int): The number of non-trivial eigenvectors to consider.
-        attr_name (str, optional): The attribute name of the data object to add
-            positional encodings to. If set to :obj:`None`, will be
-            concatenated to :obj:`data.x`.
-            (default: :obj:`"laplacian_eigenvector_pe"`)
-        is_undirected (bool, optional): If set to :obj:`True`, this transform
-            expects undirected graphs as input, and can hence speed up the
-            computation of eigenvectors. (default: :obj:`False`)
-        **kwargs (optional): Additional arguments of
-            :meth:`scipy.sparse.linalg.eigs` (when :attr:`is_undirected` is
-            :obj:`False`) or :meth:`scipy.sparse.linalg.eigsh` (when
-            :attr:`is_undirected` is :obj:`True`).
-    """
-    def __init__(
-        self,
-        k: int,
-        attr_name: Optional[str] = 'laplacian_eigenvector_pe',
-        is_undirected: bool = False,
-        **kwargs,
-    ):
-        self.k = k
-        self.attr_name = attr_name
-        self.is_undirected = is_undirected
-        self.kwargs = kwargs
-
-    def __call__(self, num_nodes, edge_index) -> Data:
-        from scipy.sparse.linalg import eigs, eigsh
-        eig_fn = eigs if not self.is_undirected else eigsh
-
-        # num_nodes = data.num_nodes
-        edge_index, edge_weight = get_laplacian(
-            edge_index,
-            normalization='sym',
-            num_nodes=num_nodes,
-        )
-
-        L = to_scipy_sparse_matrix(edge_index, edge_weight, num_nodes)
-
-        eig_vals, eig_vecs = eig_fn(
-            L,
-            k=self.k + 1,
-            which='SR' if not self.is_undirected else 'SA',
-            return_eigenvectors=True,
-            **self.kwargs,
-        )
-
-        eig_vecs = np.real(eig_vecs[:, eig_vals.argsort()])
-        pe = torch.from_numpy(eig_vecs[:, 1:self.k + 1])
-        sign = -1 + 2 * torch.randint(0, 2, (self.k, ))
-        pe *= sign
-
-        return pe
-
-class AddRandomWalkPE():
-    r"""Adds the random walk positional encoding from the `"Graph Neural
-    Networks with Learnable Structural and Positional Representations"
-    <https://arxiv.org/abs/2110.07875>`_ paper to the given graph
-    (functional name: :obj:`add_random_walk_pe`).
-
-    Args:
-        walk_length (int): The number of random walk steps.
-        attr_name (str, optional): The attribute name of the data object to add
-            positional encodings to. If set to :obj:`None`, will be
-            concatenated to :obj:`data.x`.
-            (default: :obj:`"laplacian_eigenvector_pe"`)
-    """
-    def __init__(
-        self,
-        walk_length: int,
-        attr_name: Optional[str] = 'random_walk_pe',
-    ):
-        self.walk_length = walk_length
-        self.attr_name = attr_name
-
-    def __call__(self, num_nodes, edge_index) -> Data:
-        from torch_sparse import SparseTensor
-
-        edge_index, edge_weight = get_laplacian(
-            edge_index,
-            normalization='sym',
-            num_nodes=num_nodes,
-        )
-
-        adj = SparseTensor.from_edge_index(edge_index, edge_weight,
-                                           sparse_sizes=(num_nodes, num_nodes))
-
-        # Compute D^{-1} A:
-        deg_inv = 1.0 / adj.sum(dim=1)
-        deg_inv[deg_inv == float('inf')] = 0
-        adj = adj * deg_inv.view(-1, 1)
-
-        out = adj
-        row, col, value = out.coo()
-        pe_list = [get_self_loop_attr((row, col), value, num_nodes)]
-        for _ in range(self.walk_length - 1):
-            out = out @ adj
-            row, col, value = out.coo()
-            pe_list.append(get_self_loop_attr((row, col), value, num_nodes))
-        pe = torch.stack(pe_list, dim=-1)
-
-        # data = add_node_attr(data, pe, attr_name=self.attr_name)
-        return pe
-
-    # https://github.com/pyg-team/pytorch_geometric/blob/1.6.3/torch_geometric/utils/num_nodes.py
-    def maybe_num_nodes(index: torch.Tensor,
-                        num_nodes: Optional[int] = None) -> int:
-        return int(index.max()) + 1 if num_nodes is None else num_nodes
-
-    def get_self_loop_attr(edge_index: Tensor, edge_attr: OptTensor = None,
-                        num_nodes: Optional[int] = None) -> Tensor:
-        r"""Returns the edge features or weights of self-loops
-        :math:`(i, i)` of every node :math:`i \in \mathcal{V}` in the
-        graph given by :attr:`edge_index`. Edge features of missing self-loops not
-        present in :attr:`edge_index` will be filled with zeros. If
-        :attr:`edge_attr` is not given, it will be the vector of ones.
-
-        .. note::
-            This operation is analogous to getting the diagonal elements of the
-            dense adjacency matrix.
-
-        Args:
-            edge_index (LongTensor): The edge indices.
-            edge_attr (Tensor, optional): Edge weights or multi-dimensional edge
-                features. (default: :obj:`None`)
-            num_nodes (int, optional): The number of nodes, *i.e.*
-                :obj:`max_val + 1` of :attr:`edge_index`. (default: :obj:`None`)
-
-        :rtype: :class:`Tensor`
-
-        Examples:
-
-            >>> edge_index = torch.tensor([[0, 1, 0],
-            ...                            [1, 0, 0]])
-            >>> edge_weight = torch.tensor([0.2, 0.3, 0.5])
-            >>> get_self_loop_attr(edge_index, edge_weight)
-            tensor([0.5000, 0.0000])
-
-            >>> get_self_loop_attr(edge_index, edge_weight, num_nodes=4)
-            tensor([0.5000, 0.0000, 0.0000, 0.0000])
-        """
-        loop_mask = edge_index[0] == edge_index[1]
-        loop_index = edge_index[0][loop_mask]
-
-        if edge_attr is not None:
-            loop_attr = edge_attr[loop_mask]
-        else:  # A vector of ones:
-            loop_attr = torch.ones_like(loop_index, dtype=torch.float)
-
-        num_nodes = maybe_num_nodes(edge_index, num_nodes)
-        full_loop_attr = loop_attr.new_zeros((num_nodes, ) + loop_attr.size()[1:])
-        full_loop_attr[loop_index] = loop_attr
-
-        return full_loop_attr
-
-class AddHeatKernelEigenvectorPE():
-    def __init__(
-        self,
-        k: int,
-        is_undirected: bool = False,
-        **kwargs,
-    ):
-        self.k = k
-        self.attr_name = attr_name
-        self.is_undirected = is_undirected
-        self.kwargs = kwargs
-
-    def __call__(self, pos) -> Data:
-        from scipy.sparse.linalg import eigs, eigsh
-        eig_fn = eigs if not self.is_undirected else eigsh
-
-        pos = pos.cpu()
-        D = sparse.csr_matrix(squareform(pdist(pos)))
-        pos = pos.cuda()
-
-        eig_vals, eig_vecs = eig_fn(
-            D,
-            k=self.k + 1,
-            which='SR' if not self.is_undirected else 'SA',
-            return_eigenvectors=True,
-            **self.kwargs,
-        )
-
-        eig_vecs = np.real(eig_vecs[:, eig_vals.argsort()])
-        pe = torch.from_numpy(eig_vecs[:, 1:self.k + 1]).cuda()
-        sign = -1 + 2 * torch.randint(0, 2, (self.k, )).cuda()
-        pe *= sign
-
-        
-        return pe
 
 
 class emb(torch.nn.Module):
@@ -491,6 +294,9 @@ class SphereNet(torch.nn.Module):
 
         self.update_us = torch.nn.ModuleList([update_u() for _ in range(num_layers)])
         self.pe = positional_encoding
+        if self.pe :
+            self.embedding_pe = nn.Linear(k, out_channels)
+        self.k = k
         print('positional_encoding : ',self.pe)
 
         self.reset_parameters()
@@ -509,8 +315,11 @@ class SphereNet(torch.nn.Module):
         z, pos, batch = batch_data.z, batch_data.pos, batch_data.batch
         if self.energy_and_force:
             pos.requires_grad_()
-        edge_index = radius_graph(pos, r=self.cutoff, batch=batch)
+        edge_index = radius_graph(pos, r=self.cutoff, batch=batch) # why edge_index is calculated again for batch? Is it same as calculating edge_index for each graph?
         num_nodes=z.size(0)
+        # print('edge_index.max : ',torch.max(edge_index)) # tensor(565, device='cuda:0')
+        # print('num_nodes : ',num_nodes) # 566
+
 
         dist, angle, torsion, i, j, idx_kj, idx_ji = xyz_to_dat(pos, edge_index, num_nodes, use_torsion=True)
 
@@ -521,21 +330,12 @@ class SphereNet(torch.nn.Module):
         v = self.init_v(e, i)
         u = self.init_u(torch.zeros_like(scatter(v, batch, dim=0)), v, batch) #scatter(v, batch, dim=0)
 
-        # After node feature initialization, concat positional encoding information
-        if self.pe == 'lappe' : 
-            lappe = AddLaplacianEigenvectorPE(k=2)
-            pe = lappe(num_nodes, edge_index).to(device)
-            v = torch.cat((v, pe), dim=1) 
+        if self.pe:
+            v_pos_enc = self.embedding_pe(batch_data.pe.float())
+            # print('v_pos_enc.shape  : ',v_pos_enc.shape) # torch.Size([568, 1])
+            # print('v.shape : ',v.shape) # torch.Size([568, 1])
+            v = torch.cat((v, v_pos_enc), dim=1) # torch.Size([568, 2])
 
-        elif self.pe=='rwpe':
-            rwpe = AddRandomWalkPE(walk_length=2)
-            pe = rwpe(num_nodes, edge_index)
-            v=torch.cat((v, pe), dim=1)
-
-        elif self.pe=='hkpe':
-            hkpe = AddHeatKernelEigenvectorPE(k=2)
-            pe = hkpe(num_nodes, edge_index, pos)
-            v = torch.cat((v,pe), dim=1)
 
         # Update edge, node, graph features
         for update_e, update_v, update_u in zip(self.update_es, self.update_vs, self.update_us):

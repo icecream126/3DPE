@@ -97,6 +97,7 @@ class QM93D(InMemoryDataset):
             z_i = torch.tensor(Z_qm9[i],dtype=torch.int64)
             y_i = [torch.tensor(target[name][i],dtype=torch.float32) for name in ['mu', 'alpha', 'homo', 'lumo', 'gap', 'r2', 'zpve','U0', 'U', 'H', 'G', 'Cv']]
             data = Data(pos=R_i, z=z_i, y=y_i[0], mu=y_i[0], alpha=y_i[1], homo=y_i[2], lumo=y_i[3], gap=y_i[4], r2=y_i[5], zpve=y_i[6], U0=y_i[7], U=y_i[8], H=y_i[9], G=y_i[10], Cv=y_i[11])
+            
 
             data_list.append(data)
 
@@ -106,6 +107,10 @@ class QM93D(InMemoryDataset):
             data_list = [self.pre_transform(data) for data in data_list]
         
         data, slices = self.collate(data_list)
+
+        # print('self.processd_paths : ',self.processed_paths)
+        # print('self.processd_paths[0] : ',self.processed_paths[0])
+        # exit(0)
 
         print('Saving...')
         torch.save((data, slices), self.processed_paths[0])
@@ -118,6 +123,7 @@ class QM93D(InMemoryDataset):
 
 if __name__ == '__main__':
     dataset = QM93D()
+    # dataset.process()
     print(dataset)
     print(dataset.data.z.shape)
     print(dataset.data.pos.shape)
@@ -127,7 +133,7 @@ if __name__ == '__main__':
     print(dataset.data.y)
     print(dataset.data.mu)
     split_idx = dataset.get_idx_split(len(dataset.data.y), train_size=110000, valid_size=10000, seed=42)
-    print(split_idx)
+    print(split_idx) 
     print(dataset[split_idx['train']])
     train_dataset, valid_dataset, test_dataset = dataset[split_idx['train']], dataset[split_idx['valid']], dataset[split_idx['test']]
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)

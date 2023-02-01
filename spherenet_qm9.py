@@ -2,10 +2,12 @@ from dig.threedgraph.dataset import QM93D
 from dig.threedgraph.method import SphereNet
 from dig.threedgraph.evaluation import ThreeDEvaluator
 from dig.threedgraph.method import run
+from dig.threedgraph.utils import positional_encoding
 
 import torch
 
 import argparse
+import sys
 
 parser = argparse.ArgumentParser(description='Argparse')
 
@@ -21,11 +23,15 @@ seed = args.seed
 pe = args.pe
 k = args.k
 
+cutoff=5.0
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Load the dataset and split
 dataset = QM93D(root='dataset/')
+
+if pe is not None:
+        dataset = positional_encoding(dataset, pe, k, cutoff)
 dataset.data.y = dataset.data[target]
 split_idx = dataset.get_idx_split(len(dataset.data.y), train_size=110000, valid_size=10000, seed=seed)
 train_dataset, valid_dataset, test_dataset = dataset[split_idx['train']], dataset[split_idx['valid']], dataset[split_idx['test']]
@@ -33,6 +39,8 @@ train_dataset, valid_dataset, test_dataset = dataset[split_idx['train']], datase
 print('len(train_dataset) : ',len(train_dataset))
 print('len(valid_dataset) : ',len(valid_dataset))
 print('len(test_dataset) : ',len(test_dataset))
+
+
 
 # Define model, loss, and evaluation
 model = SphereNet(energy_and_force=False, cutoff=5.0, num_layers=4,

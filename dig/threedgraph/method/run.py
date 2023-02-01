@@ -54,11 +54,12 @@ class run():
             log_dir (str, optinal): The path to save log files. If set to :obj:`''`, will not save the log files. (default: :obj:`''`)
         
         """   
+        
         run_neptune['parameters/target']=target
         run_neptune['parameters/seed']=seed
         run_neptune['parameters/pe']=pe
         run_neptune['parameters/k']=k
-
+        
         model = model.to(device)
         num_params = sum(p.numel() for p in model.parameters())
         print(f'#Params: {num_params}')
