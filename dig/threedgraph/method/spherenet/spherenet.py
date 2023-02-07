@@ -297,7 +297,7 @@ class SphereNet(torch.nn.Module):
         if self.pe :
             self.embedding_pe = nn.Linear(k, out_channels)
         self.k = k
-        print('positional_encoding : ',self.pe)
+        print('SphereNet Positional Encoding : ',self.pe)
 
         self.reset_parameters()
 
@@ -317,10 +317,7 @@ class SphereNet(torch.nn.Module):
             pos.requires_grad_()
         edge_index = radius_graph(pos, r=self.cutoff, batch=batch) # why edge_index is calculated again for batch? Is it same as calculating edge_index for each graph?
         num_nodes=z.size(0)
-        # print('edge_index.max : ',torch.max(edge_index)) # tensor(565, device='cuda:0')
-        # print('num_nodes : ',num_nodes) # 566
-
-
+        
         dist, angle, torsion, i, j, idx_kj, idx_ji = xyz_to_dat(pos, edge_index, num_nodes, use_torsion=True)
 
         emb = self.emb(dist, angle, torsion, idx_kj)
@@ -332,9 +329,11 @@ class SphereNet(torch.nn.Module):
 
         if self.pe:
             v_pos_enc = self.embedding_pe(batch_data.pe.float())
-            # print('v_pos_enc.shape  : ',v_pos_enc.shape) # torch.Size([568, 1])
-            # print('v.shape : ',v.shape) # torch.Size([568, 1])
-            v = torch.cat((v, v_pos_enc), dim=1) # torch.Size([568, 2])
+            print('v_pos_enc.shape  : ',v_pos_enc.shape) # torch.Size([568, 1])
+            print('v.shape : ',v.shape) # torch.Size([568, 1])
+            # v = torch.cat((v, v_pos_enc), dim=1) # torch.Size([568, 2]) => should be torch.add...
+            v = torch.add(v, v_pos_enc)
+            print('after added v shape : ',v.shape)
 
 
         # Update edge, node, graph features

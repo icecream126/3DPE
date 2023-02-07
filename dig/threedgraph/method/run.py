@@ -12,12 +12,12 @@ from tqdm import tqdm
 
 import neptune.new as neptune
 
-
-run_neptune = neptune.init(
-    project="ahn-group/qm9-prediction",
+'''
+run_neptune = neptune.init_run(
+    project="ahn-group/schnet-qm9-prediction",
     api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
-) 
-
+)  
+'''
 
 
 
@@ -54,12 +54,12 @@ class run():
             log_dir (str, optinal): The path to save log files. If set to :obj:`''`, will not save the log files. (default: :obj:`''`)
         
         """   
-        
+        '''
         run_neptune['parameters/target']=target
         run_neptune['parameters/seed']=seed
         run_neptune['parameters/pe']=pe
         run_neptune['parameters/k']=k
-        
+        '''
         model = model.to(device)
         num_params = sum(p.numel() for p in model.parameters())
         print(f'#Params: {num_params}')
@@ -92,11 +92,11 @@ class run():
             print('\n\nTesting...', flush=True)
             test_mae = self.val(model, test_loader, energy_and_force, p, evaluation, device, 'test')
 
-            
+            '''
             run_neptune[target+"/train/train_mae"].log(train_mae)
             run_neptune[target+"/val/valid_mae"].log(valid_mae)
             run_neptune[target+"/test/test_mae"].log(test_mae)
-            
+            '''
 
             print()
             print({'Train': train_mae, 'Validation': valid_mae, 'Test': test_mae})

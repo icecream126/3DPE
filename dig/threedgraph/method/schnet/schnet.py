@@ -1,5 +1,6 @@
 from math import pi as PI
 import torch
+from torch import nn
 import torch.nn.functional as F
 from torch.nn import Embedding, Sequential, Linear
 from torch_scatter import scatter
@@ -10,7 +11,7 @@ class update_e(torch.nn.Module):
     def __init__(self, hidden_channels, num_filters, num_gaussians, cutoff):
         super(update_e, self).__init__()
         self.cutoff = cutoff
-        self.lin = Linear(hidden_channels, num_filters, bias=False)
+        self.lin = Linear(hidden_channels, num_filters, bias=False) # hidden_channels+1
         self.mlp = Sequential(
             Linear(num_gaussians, num_filters),
             ShiftedSoftplus(),
@@ -40,7 +41,7 @@ class update_v(torch.nn.Module):
         super(update_v, self).__init__()
         self.act = ShiftedSoftplus()
         self.lin1 = Linear(num_filters, hidden_channels)
-        self.lin2 = Linear(hidden_channels, hidden_channels)
+        self.lin2 = Linear(hidden_channels, hidden_channels) # second hidden_channels+1
 
         self.reset_parameters()
 
@@ -62,7 +63,7 @@ class update_v(torch.nn.Module):
 class update_u(torch.nn.Module):
     def __init__(self, hidden_channels, out_channels):
         super(update_u, self).__init__()
-        self.lin1 = Linear(hidden_channels, hidden_channels // 2)
+        self.lin1 = Linear(hidden_channels, hidden_channels // 2)# hidden_channels+1
         self.act = ShiftedSoftplus()
         self.lin2 = Linear(hidden_channels // 2, out_channels)
 
@@ -117,7 +118,7 @@ class SchNet(torch.nn.Module):
             num_gaussians (int, optional): The number of gaussians :math:`\mu`. (default: :obj:`50`)
             cutoff (float, optional): Cutoff distance for interatomic interactions. (default: :obj:`10.0`).
     """
-    def __init__(self, energy_and_force=False, cutoff=10.0, num_layers=6, hidden_channels=128, out_channels=1, num_filters=128, num_gaussians=50):
+    def __init__(self, energy_and_force=False, cutoff=10.0, num_layers=6, hidden_channels=128, out_channels=1, num_filters=128, num_gaussians=50, positional_encoding=None, k=2):
         super(SchNet, self).__init__()
 
         self.energy_and_force = energy_and_force
@@ -139,6 +140,11 @@ class SchNet(torch.nn.Module):
         self.update_u = update_u(hidden_channels, out_channels)
 
         self.reset_parameters()
+        self.pe = positional_encoding
+        if self.pe:
+            self.embedding_pe = nn.Linear(k, hidden_channels) # hidden_channels or out_channels?
+        self.k=k
+        print('SchNet Positional Encoding : ',self.pe)
 
     def reset_parameters(self):
         self.init_v.reset_parameters()
@@ -159,6 +165,11 @@ class SchNet(torch.nn.Module):
         dist_emb = self.dist_emb(dist)
 
         v = self.init_v(z)
+
+        if self.pe:
+            v_pos_enc=self.embedding_pe(batch_data.pe.float())
+            v=torch.add(v, v_pos_enc)
+
 
         for update_e, update_v in zip(self.update_es, self.update_vs):
             e = update_e(v, dist, dist_emb, edge_index)
