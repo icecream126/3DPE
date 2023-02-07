@@ -12,12 +12,12 @@ from tqdm import tqdm
 
 import neptune.new as neptune
 
-'''
+
 run_neptune = neptune.init_run(
     project="ahn-group/schnet-qm9-prediction",
     api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
 )  
-'''
+
 
 
 
@@ -54,12 +54,25 @@ class run():
             log_dir (str, optinal): The path to save log files. If set to :obj:`''`, will not save the log files. (default: :obj:`''`)
         
         """   
-        '''
+        
         run_neptune['parameters/target']=target
         run_neptune['parameters/seed']=seed
         run_neptune['parameters/pe']=pe
         run_neptune['parameters/k']=k
-        '''
+        run_neptune['parameters/epochs']=epochs
+        tag_k = 'k='+str(k)
+        tag_target = 'target='+target
+        if pe:
+            tag_pe='pe='+pe
+        else:
+            tag_pe='pe=None'
+        tag_seed='seed='+str(seed)
+        run_neptune['sys/tags'].add([tag_k, tag_target, tag_pe, tag_seed])
+        # run_neptune['sys/tags'].add(tag_k)
+        # run_neptune['sys/tags'].add(tag_target)
+        # run_neptune['sys/tags'].add(tag_pe)
+        # run_neptune['sys/tags'].add(tag_seed)
+        
         model = model.to(device)
         num_params = sum(p.numel() for p in model.parameters())
         print(f'#Params: {num_params}')
@@ -92,11 +105,11 @@ class run():
             print('\n\nTesting...', flush=True)
             test_mae = self.val(model, test_loader, energy_and_force, p, evaluation, device, 'test')
 
-            '''
-            run_neptune[target+"/train/train_mae"].log(train_mae)
-            run_neptune[target+"/val/valid_mae"].log(valid_mae)
-            run_neptune[target+"/test/test_mae"].log(test_mae)
-            '''
+            
+            run_neptune[target+"/train_mae"].log(train_mae)
+            run_neptune[target+"/valid_mae"].log(valid_mae)
+            run_neptune[target+"/test_mae"].log(test_mae)
+            
 
             print()
             print({'Train': train_mae, 'Validation': valid_mae, 'Test': test_mae})
