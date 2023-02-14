@@ -1,3 +1,4 @@
 #!/bin/bash
-CUDA_VISIBLE_DEVICES=0 python spherenet_qm9.py --target='mu' --seed=100 --pe='hkpe'
-CUDA_VISIBLE_DEVICES=0 python spherenet_qm9.py --target='alpha' --seed=100 --pe='hkpe'
+CUDA_VISIBLE_DEVICES=0 python schnet_qm9.py --target='mu' --seed=42
+# CUDA_VISIBLE_DEVICES=0 python schnet_qm9.py --target='mu' --seed=50
+# CUDA_VISIBLE_DEVICES=0 python schnet_qm9.py --target='mu' --seed=100

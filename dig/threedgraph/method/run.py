@@ -9,6 +9,10 @@ from torch.autograd import grad
 from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR
 from tqdm import tqdm
+# from pytorchtools import EarlyStopping
+
+
+
 
 import neptune.new as neptune
 
@@ -19,6 +23,56 @@ run_neptune = neptune.init_run(
 )  
 
 
+class EarlyStopping:
+    """Early stops the training if validation loss doesn't improve after a given patience."""
+    def __init__(self, patience=7, verbose=False, delta=0, path='checkpoint.pt', trace_func=print):
+        """
+        Args:
+            patience (int): How long to wait after last time validation loss improved.
+                            Default: 7
+            verbose (bool): If True, prints a message for each validation loss improvement. 
+                            Default: False
+            delta (float): Minimum change in the monitored quantity to qualify as an improvement.
+                            Default: 0
+            path (str): Path for the checkpoint to be saved to.
+                            Default: 'checkpoint.pt'
+            trace_func (function): trace print function.
+                            Default: print            
+        """
+        self.patience = patience
+        self.verbose = verbose
+        self.counter = 0
+        self.best_score = None
+        self.early_stop = False
+        self.val_loss_min = np.Inf
+        self.delta = delta
+        self.path = path
+        self.trace_func = trace_func
+    def __call__(self, val_loss, model):
+
+        score = -val_loss
+
+        if self.best_score is None:
+            self.best_score = score
+            self.save_checkpoint(val_loss, model)
+        elif score < self.best_score + self.delta:
+            self.counter += 1
+            self.trace_func(f'EarlyStopping counter: {self.counter} out of {self.patience}')
+            if self.counter >= self.patience:
+                self.early_stop = True
+        else:
+            self.best_score = score
+            self.save_checkpoint(val_loss, model)
+            self.counter = 0
+
+    def save_checkpoint(self, val_loss, model):
+        '''Saves model when validation loss decrease.'''
+        if self.verbose:
+            self.trace_func(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
+        torch.save(model.state_dict(), self.path)
+        self.val_loss_min = val_loss
+        
+early_stopping = EarlyStopping(patience=25, verbose=True, path='schnetpack_checkpoint.pt')
 
 
 class run():
@@ -68,6 +122,8 @@ class run():
             tag_pe='pe=None'
         tag_seed='seed='+str(seed)
         run_neptune['sys/tags'].add([tag_k, tag_target, tag_pe, tag_seed])
+        if pe=='lappe':
+            run_neptune['sys/tags'].add('petype=concat')
         # run_neptune['sys/tags'].add(tag_k)
         # run_neptune['sys/tags'].add(tag_target)
         # run_neptune['sys/tags'].add(tag_pe)
@@ -129,6 +185,11 @@ class run():
                     torch.save(checkpoint, os.path.join(save_dir, 'valid_checkpoint.pt'))
 
             scheduler.step()
+            
+            early_stopping(valid_mae, model)
+            if early_stopping.early_stop:
+                print('Early Stopping ...')
+                break
 
         print(f'Best validation MAE so far: {best_valid}')
         print(f'Test MAE when got best validation result: {best_test}')
@@ -215,5 +276,4 @@ class run():
             return energy_mae + p * force_mae
 
         
-
         return evaluation.eval(input_dict)['mae']

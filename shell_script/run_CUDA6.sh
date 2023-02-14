@@ -1,3 +1,3 @@
 #!/bin/bash
-CUDA_VISIBLE_DEVICES=6 python spherenet_qm9.py --target='U' --seed=100  --pe='hkpe'
-CUDA_VISIBLE_DEVICES=6 python spherenet_qm9.py --target='H' --seed=100 --pe='hkpe'
+CUDA_VISIBLE_DEVICES=6 python schnet_qm9.py --target='G' --seed=50 --pe='lappe'
+CUDA_VISIBLE_DEVICES=6 python schnet_qm9.py --target='G' --seed=100 --pe='lappe'

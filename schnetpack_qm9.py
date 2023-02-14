@@ -52,4 +52,4 @@ evaluation = ThreeDEvaluator()
 # Train and evaluate
 run3d = run()
 run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation,seed, pe,k,
-        epochs=epoch, batch_size=32, vt_batch_size=32, lr=0.0003, lr_decay_factor=0.96, lr_decay_step_size=100000)
+        epochs=epoch, batch_size=100, vt_batch_size=100, lr=0.0001, lr_decay_factor=0.5, lr_decay_step_size=100000)

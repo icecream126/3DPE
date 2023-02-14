@@ -4,8 +4,6 @@
 
 import sys
 sys.path.append('/home/guest_khm/3DPE/dig/threedgraph/positional_encoding/')
-# sys.path.append('/home/guest_khm/3DPE/dig/threedgraph/positional_encoding/py')
-# sys.path.append('/home/guest_khm/3DPE/dig/threedgraph/positional_encoding/randomwalkpe.py')
 sys.path.append('/home/guest_khm/3DPE/dig/threedgraph/dataset/')
 
 from laplacianpe import LaplacianEigenvectorPE
@@ -43,7 +41,7 @@ class QM9LapPE(InMemoryDataset):
 
     @property
     def processed_file_names(self):
-        return 'qm9_lappe_k_'+str(self.k)+'_cutoff_+'+str(self.cutoff)+'.pt'
+        return 'qm9_lappe_k_'+str(self.k)+'_cutoff_'+str(self.cutoff)+'.pt'
         
 
     def get_idx_split(self, data_size, train_size, valid_size, seed):
@@ -52,12 +50,13 @@ class QM9LapPE(InMemoryDataset):
         split_dict = {'train':train_idx, 'valid':val_idx, 'test':test_idx}
         return split_dict
 
+    '''
     def process(self):
         data, slices = self.collate(data_list)
 
         print('Saving lappe with k = '+str(self.k)+' and cutoff = '+str(self.cutoff)+'...')
         torch.save((data, slices), self.processed_paths[0])
-
+    '''
 
 # origdataset = QM93D()
 # data_list = []

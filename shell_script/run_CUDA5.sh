@@ -1,3 +1,4 @@
 #!/bin/bash
-CUDA_VISIBLE_DEVICES=5 python spherenet_qm9.py --target='zpve' --seed=100 --pe='hkpe'
-CUDA_VISIBLE_DEVICES=5 python spherenet_qm9.py --target='U0' --seed=100 --pe='hkpe'
+CUDA_VISIBLE_DEVICES=5 python schnetpack_qm9.py --target='U0' --seed=42
+# CUDA_VISIBLE_DEVICES=2 python schnet_qm9.py --target='U0' --seed=50
+# CUDA_VISIBLE_DEVICES=2 python schnet_qm9.py --target='U0' --seed=100
