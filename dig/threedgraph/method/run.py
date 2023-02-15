@@ -17,12 +17,18 @@ from tqdm import tqdm
 import neptune.new as neptune
 
 
+run = neptune.init_run(
+    project="ahn-group/schnet-3dpe",
+    api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
+) 
+'''
 run_neptune = neptune.init_run(
     project="ahn-group/schnet-qm9-prediction",
     api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
 )  
+'''
 
-
+'''
 class EarlyStopping:
     """Early stops the training if validation loss doesn't improve after a given patience."""
     def __init__(self, patience=7, verbose=False, delta=0, path='checkpoint.pt', trace_func=print):
@@ -71,8 +77,8 @@ class EarlyStopping:
             self.trace_func(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
         torch.save(model.state_dict(), self.path)
         self.val_loss_min = val_loss
-        
-early_stopping = EarlyStopping(patience=200, verbose=True, path='schnetpack_checkpoint.pt')
+'''
+# early_stopping = EarlyStopping(patience=200, verbose=True, path='schnet_checkpoint.pt')
 
 
 class run():
