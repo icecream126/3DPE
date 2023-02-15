@@ -191,12 +191,12 @@ class run():
                     torch.save(checkpoint, os.path.join(save_dir, 'valid_checkpoint.pt'))
 
             scheduler.step()
-            
+            '''
             early_stopping(valid_mae, model)
             if early_stopping.early_stop:
                 print('Early Stopping ...')
                 break
-
+            '''
         print(f'Best validation MAE so far: {best_valid}')
         print(f'Test MAE when got best validation result: {best_test}')
         
