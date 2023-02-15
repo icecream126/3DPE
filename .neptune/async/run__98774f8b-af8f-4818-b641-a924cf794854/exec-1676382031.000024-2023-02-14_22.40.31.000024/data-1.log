@@ -713,3 +713,153 @@
 {"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 92%|\u2589| 192/209 [00:07<00:00, 27.36", "step": null, "ts": 1676382112.1371622}]}, "version": 713}
 {"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 93%|\u2589| 195/209 [00:07<00:00, 27.62", "step": null, "ts": 1676382112.2434149}]}, "version": 714}
 {"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 95%|\u2589| 198/209 [00:07<00:00, 27.80", "step": null, "ts": 1676382112.3498013}]}, "version": 715}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 96%|\u2589| 201/209 [00:07<00:00, 27.99", "step": null, "ts": 1676382112.455199}]}, "version": 716}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 98%|\u2589| 204/209 [00:07<00:00, 28.07", "step": null, "ts": 1676382112.5613453}]}, "version": 717}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 99%|\u2589| 207/209 [00:07<00:00, 28.14", "step": null, "ts": 1676382112.667208}]}, "version": 718}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "", "step": null, "ts": 1676382112.717522}]}, "version": 719}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r100%|\u2588| 209/209 [00:07<00:00, 26.49", "step": null, "ts": 1676382112.7177882}]}, "version": 720}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\n", "step": null, "ts": 1676382112.7179592}]}, "version": 721}
+{"obj": {"type": "LogFloats", "path": ["homo", "train_mae"], "values": [{"value": 0.49651889806493704, "step": null, "ts": 1676382112.7182407}]}, "version": 722}
+{"obj": {"type": "LogFloats", "path": ["homo", "valid_mae"], "values": [{"value": 0.3047095537185669, "step": null, "ts": 1676382112.7184236}]}, "version": 723}
+{"obj": {"type": "LogFloats", "path": ["homo", "test_mae"], "values": [{"value": 0.2887359857559204, "step": null, "ts": 1676382112.7184908}]}, "version": 724}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1676382112.7187512}]}, "version": 725}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stdout"], "values": [{"value": "{'Train': 0.49651889806493704, 'Validation': 0.3047095537185669, 'Test': 0.2887359857559204}", "step": null, "ts": 1676382112.7190328}]}, "version": 726}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1676382112.7192373}]}, "version": 727}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stdout"], "values": [{"value": "Validation loss decreased (inf --> 0.304710).  Saving model ...", "step": null, "ts": 1676382112.719408}]}, "version": 728}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1676382112.7196047}]}, "version": 729}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stdout"], "values": [{"value": "\n=====Epoch 2", "step": null, "ts": 1676382112.7280307}]}, "version": 730}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  0%|     | 0/1090 [00:00<?, ?it/s]", "step": null, "ts": 1676382112.728479}]}, "version": 731}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1676382112.7287695}]}, "version": 732}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stdout"], "values": [{"value": "\nTraining...", "step": null, "ts": 1676382112.7290409}]}, "version": 733}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1676382112.729189}]}, "version": 734}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  0%| | 2/1090 [00:00<00:58, 18.76i", "step": null, "ts": 1676382112.8364012}]}, "version": 735}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  0%| | 5/1090 [00:00<00:52, 20.86i", "step": null, "ts": 1676382112.9726233}]}, "version": 736}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  1%| | 8/1090 [00:00<00:50, 21.25i", "step": null, "ts": 1676382113.1122868}]}, "version": 737}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  1%| | 11/1090 [00:00<00:48, 22.02", "step": null, "ts": 1676382113.2401667}]}, "version": 738}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  1%| | 14/1090 [00:00<00:47, 22.49", "step": null, "ts": 1676382113.3687444}]}, "version": 739}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  2%| | 17/1090 [00:00<00:46, 22.83", "step": null, "ts": 1676382113.4963658}]}, "version": 740}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  2%| | 20/1090 [00:00<00:46, 23.06", "step": null, "ts": 1676382113.6237721}]}, "version": 741}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  2%| | 23/1090 [00:01<00:46, 23.18", "step": null, "ts": 1676382113.7523456}]}, "version": 742}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  2%| | 26/1090 [00:01<00:45, 23.24", "step": null, "ts": 1676382113.8802345}]}, "version": 743}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  3%| | 29/1090 [00:01<00:45, 23.30", "step": null, "ts": 1676382114.0082345}]}, "version": 744}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  3%| | 32/1090 [00:01<00:46, 22.96", "step": null, "ts": 1676382114.1432042}]}, "version": 745}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  3%| | 35/1090 [00:01<00:45, 23.10", "step": null, "ts": 1676382114.27172}]}, "version": 746}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  3%| | 38/1090 [00:01<00:45, 23.27", "step": null, "ts": 1676382114.3988454}]}, "version": 747}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  4%| | 41/1090 [00:01<00:44, 23.33", "step": null, "ts": 1676382114.5263739}]}, "version": 748}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  4%| | 44/1090 [00:01<00:44, 23.33", "step": null, "ts": 1676382114.6543043}]}, "version": 749}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  4%| | 47/1090 [00:02<00:44, 23.38", "step": null, "ts": 1676382114.781985}]}, "version": 750}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  5%| | 50/1090 [00:02<00:44, 23.38", "step": null, "ts": 1676382114.9102674}]}, "version": 751}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  5%| | 53/1090 [00:02<00:44, 23.39", "step": null, "ts": 1676382115.0384207}]}, "version": 752}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  5%| | 56/1090 [00:02<00:44, 23.46", "step": null, "ts": 1676382115.1655521}]}, "version": 753}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  5%| | 59/1090 [00:02<00:45, 22.84", "step": null, "ts": 1676382115.3049293}]}, "version": 754}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  6%| | 62/1090 [00:02<00:44, 22.97", "step": null, "ts": 1676382115.433804}]}, "version": 755}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  6%| | 65/1090 [00:02<00:44, 23.10", "step": null, "ts": 1676382115.5625684}]}, "version": 756}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  6%| | 68/1090 [00:02<00:44, 22.95", "step": null, "ts": 1676382115.694883}]}, "version": 757}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  7%| | 71/1090 [00:03<00:43, 23.18", "step": null, "ts": 1676382115.8209844}]}, "version": 758}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  7%| | 74/1090 [00:03<00:44, 22.66", "step": null, "ts": 1676382115.9624808}]}, "version": 759}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  7%| | 77/1090 [00:03<00:44, 22.82", "step": null, "ts": 1676382116.0897179}]}, "version": 760}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  7%| | 80/1090 [00:03<00:43, 23.07", "step": null, "ts": 1676382116.2163053}]}, "version": 761}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  8%| | 83/1090 [00:03<00:43, 23.05", "step": null, "ts": 1676382116.3468268}]}, "version": 762}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  8%| | 86/1090 [00:03<00:43, 23.18", "step": null, "ts": 1676382116.4750292}]}, "version": 763}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  8%| | 89/1090 [00:03<00:42, 23.38", "step": null, "ts": 1676382116.6002493}]}, "version": 764}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  8%| | 92/1090 [00:03<00:42, 23.39", "step": null, "ts": 1676382116.7283907}]}, "version": 765}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  9%| | 95/1090 [00:04<00:42, 23.44", "step": null, "ts": 1676382116.8557758}]}, "version": 766}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  9%| | 98/1090 [00:04<00:42, 23.48", "step": null, "ts": 1676382116.983578}]}, "version": 767}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r  9%| | 101/1090 [00:04<00:42, 23.3", "step": null, "ts": 1676382117.1123395}]}, "version": 768}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 10%| | 104/1090 [00:04<00:42, 23.3", "step": null, "ts": 1676382117.2407584}]}, "version": 769}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 10%| | 107/1090 [00:04<00:42, 23.4", "step": null, "ts": 1676382117.3687057}]}, "version": 770}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 10%| | 110/1090 [00:04<00:41, 23.4", "step": null, "ts": 1676382117.4959078}]}, "version": 771}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 10%| | 113/1090 [00:04<00:41, 23.4", "step": null, "ts": 1676382117.6234767}]}, "version": 772}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 11%| | 116/1090 [00:05<00:41, 23.4", "step": null, "ts": 1676382117.7511427}]}, "version": 773}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 11%| | 119/1090 [00:05<00:41, 23.4", "step": null, "ts": 1676382117.879089}]}, "version": 774}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 11%| | 122/1090 [00:05<00:41, 23.5", "step": null, "ts": 1676382118.0067172}]}, "version": 775}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 11%| | 125/1090 [00:05<00:40, 23.5", "step": null, "ts": 1676382118.1323178}]}, "version": 776}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 12%| | 128/1090 [00:05<00:40, 23.6", "step": null, "ts": 1676382118.2581341}]}, "version": 777}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 12%| | 131/1090 [00:05<00:40, 23.6", "step": null, "ts": 1676382118.3851697}]}, "version": 778}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 12%| | 134/1090 [00:05<00:40, 23.6", "step": null, "ts": 1676382118.511837}]}, "version": 779}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 13%|\u258f| 137/1090 [00:05<00:40, 23.6", "step": null, "ts": 1676382118.638924}]}, "version": 780}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 13%|\u258f| 140/1090 [00:06<00:40, 23.6", "step": null, "ts": 1676382118.7657006}]}, "version": 781}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 13%|\u258f| 143/1090 [00:06<00:40, 23.5", "step": null, "ts": 1676382118.8973339}]}, "version": 782}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 13%|\u258f| 146/1090 [00:06<00:40, 23.3", "step": null, "ts": 1676382119.0257945}]}, "version": 783}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 14%|\u258f| 149/1090 [00:06<00:40, 23.3", "step": null, "ts": 1676382119.154968}]}, "version": 784}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 14%|\u258f| 152/1090 [00:06<00:39, 23.4", "step": null, "ts": 1676382119.2802022}]}, "version": 785}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 14%|\u258f| 155/1090 [00:06<00:39, 23.5", "step": null, "ts": 1676382119.4073503}]}, "version": 786}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 14%|\u258f| 158/1090 [00:06<00:39, 23.5", "step": null, "ts": 1676382119.5347128}]}, "version": 787}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 15%|\u258f| 161/1090 [00:06<00:39, 23.5", "step": null, "ts": 1676382119.6625216}]}, "version": 788}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 15%|\u258f| 164/1090 [00:07<00:39, 23.4", "step": null, "ts": 1676382119.7919831}]}, "version": 789}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 15%|\u258f| 167/1090 [00:07<00:39, 23.5", "step": null, "ts": 1676382119.9180777}]}, "version": 790}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 16%|\u258f| 170/1090 [00:07<00:39, 23.5", "step": null, "ts": 1676382120.045998}]}, "version": 791}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 16%|\u258f| 173/1090 [00:07<00:38, 23.6", "step": null, "ts": 1676382120.171712}]}, "version": 792}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 16%|\u258f| 176/1090 [00:07<00:38, 23.5", "step": null, "ts": 1676382120.3004005}]}, "version": 793}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 16%|\u258f| 179/1090 [00:07<00:38, 23.4", "step": null, "ts": 1676382120.4289274}]}, "version": 794}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 17%|\u258f| 182/1090 [00:07<00:38, 23.4", "step": null, "ts": 1676382120.5576584}]}, "version": 795}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 17%|\u258f| 185/1090 [00:07<00:38, 23.4", "step": null, "ts": 1676382120.6861105}]}, "version": 796}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 17%|\u258f| 188/1090 [00:08<00:38, 23.2", "step": null, "ts": 1676382120.8166165}]}, "version": 797}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 18%|\u258f| 191/1090 [00:08<00:38, 23.3", "step": null, "ts": 1676382120.9466345}]}, "version": 798}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 18%|\u258f| 194/1090 [00:08<00:38, 23.3", "step": null, "ts": 1676382121.0743763}]}, "version": 799}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 18%|\u258f| 197/1090 [00:08<00:38, 23.3", "step": null, "ts": 1676382121.203326}]}, "version": 800}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 18%|\u258f| 200/1090 [00:08<00:38, 23.4", "step": null, "ts": 1676382121.3287463}]}, "version": 801}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 19%|\u258f| 203/1090 [00:08<00:38, 23.3", "step": null, "ts": 1676382121.458498}]}, "version": 802}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 19%|\u258f| 206/1090 [00:08<00:37, 23.5", "step": null, "ts": 1676382121.5837762}]}, "version": 803}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 19%|\u258f| 209/1090 [00:08<00:37, 23.5", "step": null, "ts": 1676382121.7113795}]}, "version": 804}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 19%|\u258f| 212/1090 [00:09<00:37, 23.5", "step": null, "ts": 1676382121.839113}]}, "version": 805}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 20%|\u258f| 215/1090 [00:09<00:37, 23.4", "step": null, "ts": 1676382121.967631}]}, "version": 806}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "cpu"], "values": [{"value": 13.3, "step": null, "ts": 1676382122.0235398}]}, "version": 807}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "memory"], "values": [{"value": 30.21240234375, "step": null, "ts": 1676382122.0235398}]}, "version": 808}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "gpu"], "values": [{"value": 56.0, "step": null, "ts": 1676382122.0235398}]}, "version": 809}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "gpu_memory"], "values": [{"value": 2.5357666015625, "step": null, "ts": 1676382122.0235398}]}, "version": 810}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 20%|\u258f| 218/1090 [00:09<00:37, 23.4", "step": null, "ts": 1676382122.0967307}]}, "version": 811}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 20%|\u258f| 221/1090 [00:09<00:36, 23.5", "step": null, "ts": 1676382122.2217019}]}, "version": 812}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 21%|\u258f| 224/1090 [00:09<00:36, 23.5", "step": null, "ts": 1676382122.3512087}]}, "version": 813}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 21%|\u258f| 227/1090 [00:09<00:36, 23.5", "step": null, "ts": 1676382122.4792373}]}, "version": 814}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 21%|\u258f| 230/1090 [00:09<00:36, 23.4", "step": null, "ts": 1676382122.6059754}]}, "version": 815}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 21%|\u258f| 233/1090 [00:10<00:36, 23.3", "step": null, "ts": 1676382122.7385533}]}, "version": 816}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 22%|\u258f| 236/1090 [00:10<00:36, 23.4", "step": null, "ts": 1676382122.8641145}]}, "version": 817}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 22%|\u258f| 239/1090 [00:10<00:36, 23.4", "step": null, "ts": 1676382122.9934125}]}, "version": 818}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 22%|\u258f| 242/1090 [00:10<00:36, 23.4", "step": null, "ts": 1676382123.1185565}]}, "version": 819}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 22%|\u258f| 245/1090 [00:10<00:36, 23.4", "step": null, "ts": 1676382123.2470593}]}, "version": 820}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 23%|\u258f| 248/1090 [00:10<00:35, 23.4", "step": null, "ts": 1676382123.375239}]}, "version": 821}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 23%|\u258f| 251/1090 [00:10<00:35, 23.4", "step": null, "ts": 1676382123.5028229}]}, "version": 822}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 23%|\u258f| 254/1090 [00:10<00:35, 23.6", "step": null, "ts": 1676382123.6270788}]}, "version": 823}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 24%|\u258f| 257/1090 [00:11<00:35, 23.5", "step": null, "ts": 1676382123.75479}]}, "version": 824}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 24%|\u258f| 260/1090 [00:11<00:35, 23.5", "step": null, "ts": 1676382123.8835187}]}, "version": 825}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 24%|\u258f| 263/1090 [00:11<00:35, 23.5", "step": null, "ts": 1676382124.011965}]}, "version": 826}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 24%|\u258f| 266/1090 [00:11<00:35, 23.5", "step": null, "ts": 1676382124.1392977}]}, "version": 827}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 25%|\u258f| 269/1090 [00:11<00:34, 23.4", "step": null, "ts": 1676382124.2669158}]}, "version": 828}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 25%|\u258f| 272/1090 [00:11<00:34, 23.4", "step": null, "ts": 1676382124.3946242}]}, "version": 829}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 25%|\u258e| 275/1090 [00:11<00:35, 23.2", "step": null, "ts": 1676382124.5269806}]}, "version": 830}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 26%|\u258e| 278/1090 [00:11<00:34, 23.2", "step": null, "ts": 1676382124.655755}]}, "version": 831}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 26%|\u258e| 281/1090 [00:12<00:34, 23.3", "step": null, "ts": 1676382124.782535}]}, "version": 832}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 26%|\u258e| 284/1090 [00:12<00:34, 23.4", "step": null, "ts": 1676382124.9093182}]}, "version": 833}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 26%|\u258e| 287/1090 [00:12<00:33, 23.6", "step": null, "ts": 1676382125.033855}]}, "version": 834}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 27%|\u258e| 290/1090 [00:12<00:33, 23.6", "step": null, "ts": 1676382125.1600013}]}, "version": 835}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 27%|\u258e| 293/1090 [00:12<00:33, 23.6", "step": null, "ts": 1676382125.2878008}]}, "version": 836}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 27%|\u258e| 296/1090 [00:12<00:33, 23.5", "step": null, "ts": 1676382125.4151895}]}, "version": 837}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 27%|\u258e| 299/1090 [00:12<00:33, 23.6", "step": null, "ts": 1676382125.543859}]}, "version": 838}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 28%|\u258e| 302/1090 [00:12<00:33, 23.6", "step": null, "ts": 1676382125.6691918}]}, "version": 839}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 28%|\u258e| 305/1090 [00:13<00:33, 23.5", "step": null, "ts": 1676382125.7964177}]}, "version": 840}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 28%|\u258e| 308/1090 [00:13<00:33, 23.4", "step": null, "ts": 1676382125.9268525}]}, "version": 841}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 29%|\u258e| 311/1090 [00:13<00:33, 23.4", "step": null, "ts": 1676382126.0544226}]}, "version": 842}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 29%|\u258e| 314/1090 [00:13<00:33, 23.3", "step": null, "ts": 1676382126.1839657}]}, "version": 843}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 29%|\u258e| 317/1090 [00:13<00:33, 23.4", "step": null, "ts": 1676382126.3115766}]}, "version": 844}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 29%|\u258e| 320/1090 [00:13<00:32, 23.3", "step": null, "ts": 1676382126.4399633}]}, "version": 845}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 30%|\u258e| 323/1090 [00:13<00:32, 23.4", "step": null, "ts": 1676382126.5678256}]}, "version": 846}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 30%|\u258e| 326/1090 [00:13<00:32, 23.4", "step": null, "ts": 1676382126.6970701}]}, "version": 847}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 30%|\u258e| 329/1090 [00:14<00:32, 23.4", "step": null, "ts": 1676382126.8242157}]}, "version": 848}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 30%|\u258e| 332/1090 [00:14<00:32, 23.3", "step": null, "ts": 1676382126.9526858}]}, "version": 849}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 31%|\u258e| 335/1090 [00:14<00:32, 23.4", "step": null, "ts": 1676382127.0828607}]}, "version": 850}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 31%|\u258e| 338/1090 [00:14<00:32, 23.3", "step": null, "ts": 1676382127.21018}]}, "version": 851}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 31%|\u258e| 341/1090 [00:14<00:32, 23.3", "step": null, "ts": 1676382127.3399897}]}, "version": 852}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 32%|\u258e| 344/1090 [00:14<00:32, 23.2", "step": null, "ts": 1676382127.4700546}]}, "version": 853}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 32%|\u258e| 347/1090 [00:14<00:31, 23.3", "step": null, "ts": 1676382127.5951824}]}, "version": 854}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 32%|\u258e| 350/1090 [00:15<00:32, 22.9", "step": null, "ts": 1676382127.7319176}]}, "version": 855}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 32%|\u258e| 353/1090 [00:15<00:32, 23.0", "step": null, "ts": 1676382127.8632545}]}, "version": 856}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 33%|\u258e| 356/1090 [00:15<00:31, 23.2", "step": null, "ts": 1676382127.988597}]}, "version": 857}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 33%|\u258e| 359/1090 [00:15<00:31, 23.2", "step": null, "ts": 1676382128.116099}]}, "version": 858}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 33%|\u258e| 362/1090 [00:15<00:31, 23.3", "step": null, "ts": 1676382128.2438042}]}, "version": 859}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 33%|\u258e| 365/1090 [00:15<00:31, 23.3", "step": null, "ts": 1676382128.3719192}]}, "version": 860}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 34%|\u258e| 368/1090 [00:15<00:31, 23.2", "step": null, "ts": 1676382128.5016506}]}, "version": 861}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 34%|\u258e| 371/1090 [00:15<00:30, 23.2", "step": null, "ts": 1676382128.6311204}]}, "version": 862}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 34%|\u258e| 374/1090 [00:16<00:30, 23.2", "step": null, "ts": 1676382128.760301}]}, "version": 863}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 35%|\u258e| 377/1090 [00:16<00:30, 23.3", "step": null, "ts": 1676382128.886657}]}, "version": 864}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "stderr"], "values": [{"value": "\r 35%|\u258e| 380/1090 [00:16<00:30, 23.2", "step": null, "ts": 1676382129.017802}]}, "version": 865}
