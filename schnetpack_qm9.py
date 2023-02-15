@@ -37,7 +37,7 @@ print('pe : ',pe)
 print('dataset : ',dataset.data)
 
 dataset.data.y = dataset.data[target]
-split_idx = dataset.get_idx_split(len(dataset.data.y), train_size=109000, valid_size=1000, seed=seed)
+split_idx = dataset.get_idx_split(len(dataset.data.y), train_size=110000, valid_size=10000, seed=seed)
 train_dataset, valid_dataset, test_dataset = dataset[split_idx['train']], dataset[split_idx['valid']], dataset[split_idx['test']]
 
 print('len(train_dataset) : ',len(train_dataset))
