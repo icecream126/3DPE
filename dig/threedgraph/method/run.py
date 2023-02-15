@@ -72,7 +72,7 @@ class EarlyStopping:
         torch.save(model.state_dict(), self.path)
         self.val_loss_min = val_loss
         
-early_stopping = EarlyStopping(patience=25, verbose=True, path='schnetpack_checkpoint.pt')
+early_stopping = EarlyStopping(patience=200, verbose=True, path='schnetpack_checkpoint.pt')
 
 
 class run():
