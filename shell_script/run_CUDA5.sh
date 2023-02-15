@@ -1,4 +1,10 @@
 #!/bin/bash
-CUDA_VISIBLE_DEVICES=5 python schnetpack_qm9.py --target='U0' --seed=42
-# CUDA_VISIBLE_DEVICES=2 python schnet_qm9.py --target='U0' --seed=50
-# CUDA_VISIBLE_DEVICES=2 python schnet_qm9.py --target='U0' --seed=100
+CUDA_VISIBLE_DEVICES=5 python dig_schnet_qm9.py --target='lumo' --seed=42 --pe='lappe'
+CUDA_VISIBLE_DEVICES=5 python dig_schnet_qm9.py --target='gap' --seed=42 --pe='lappe'
+CUDA_VISIBLE_DEVICES=5 python dig_schnet_qm9.py --target='r2' --seed=42 --pe='lappe'
+CUDA_VISIBLE_DEVICES=5 python dig_schnet_qm9.py --target='lumo' --seed=50 --pe='lappe'
+CUDA_VISIBLE_DEVICES=5 python dig_schnet_qm9.py --target='gap' --seed=50 --pe='lappe'
+CUDA_VISIBLE_DEVICES=5 python dig_schnet_qm9.py --target='r2' --seed=50 --pe='lappe'
+CUDA_VISIBLE_DEVICES=5 python dig_schnet_qm9.py --target='lumo' --seed=100 --pe='lappe'
+CUDA_VISIBLE_DEVICES=5 python dig_schnet_qm9.py --target='gap' --seed=100 --pe='lappe'
+CUDA_VISIBLE_DEVICES=5 python dig_schnet_qm9.py --target='r2' --seed=100 --pe='lappe'

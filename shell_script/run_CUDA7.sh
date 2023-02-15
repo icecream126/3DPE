@@ -1,4 +1,10 @@
 #!/bin/bash
-CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='homo' --seed=42
-# CUDA_VISIBLE_DEVICES=1 python schnet_qm9.py --target='homo' --seed=50
-# CUDA_VISIBLE_DEVICES=1 python schnet_qm9.py --target='homo' --seed=100
+CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='H' --seed=42 --pe='lappe'
+CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='G' --seed=42 --pe='lappe'
+CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='Cv' --seed=42 --pe='lappe'
+CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='H' --seed=50 --pe='lappe'
+CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='G' --seed=50 --pe='lappe'
+CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='Cv' --seed=50 --pe='lappe'
+CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='H' --seed=100 --pe='lappe'
+CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='G' --seed=100 --pe='lappe'
+CUDA_VISIBLE_DEVICES=7 python dig_schnet_qm9.py --target='Cv' --seed=100 --pe='lappe'
