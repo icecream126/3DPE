@@ -143,6 +143,7 @@ class SchNet(torch.nn.Module):
         self.pe = positional_encoding
         if self.pe:
             self.embedding_pe = nn.Linear(k, hidden_channels) # hidden_channels or out_channels?
+            self.embedding_concat = nn.Linear(hidden_channels*2, hidden_channels)
         self.k=k
         print('SchNet Positional Encoding : ',self.pe)
 
@@ -168,7 +169,9 @@ class SchNet(torch.nn.Module):
 
         if self.pe:
             v_pos_enc=self.embedding_pe(batch_data.pe.float())
-            v=torch.add(v, v_pos_enc)
+            # v=torch.add(v, v_pos_enc)
+            v = self.embedding_concat(torch.cat((v, v_pos_enc), dim=1))
+
 
 
         for update_e, update_v in zip(self.update_es, self.update_vs):
