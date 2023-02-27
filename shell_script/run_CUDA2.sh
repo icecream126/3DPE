@@ -1,7 +1,7 @@
 #!/bin/bash
-CUDA_VISIBLE_DEVICES=2 python spherenet_qm9.py --target='mu' --seed=50 --pe='hkpe'
-CUDA_VISIBLE_DEVICES=2 python spherenet_qm9.py --target='alpha' --seed=50 --pe='hkpe'
-CUDA_VISIBLE_DEVICES=2 python spherenet_qm9.py --target='homo' --seed=50  --pe='hkpe'
-CUDA_VISIBLE_DEVICES=2 python spherenet_qm9.py --target='lumo' --seed=50 --pe='hkpe'
-CUDA_VISIBLE_DEVICES=2 python spherenet_qm9.py --target='gap' --seed=50  --pe='hkpe'
-CUDA_VISIBLE_DEVICES=2 python spherenet_qm9.py --target='r2' --seed=50 --pe='hkpe'
+CUDA_VISIBLE_DEVICES=2 python dig_schnet_qm9.py --target='homo' --seed=42 --pe='signinv'
+CUDA_VISIBLE_DEVICES=2 python dig_schnet_qm9.py --target='r2' --seed=42 --pe='signinv'
+CUDA_VISIBLE_DEVICES=2 python dig_schnet_qm9.py --target='homo' --seed=50 --pe='signinv'
+CUDA_VISIBLE_DEVICES=2 python dig_schnet_qm9.py --target='r2' --seed=50 --pe='signinv'
+CUDA_VISIBLE_DEVICES=2 python dig_schnet_qm9.py --target='homo' --seed=100 --pe='signinv'
+CUDA_VISIBLE_DEVICES=2 python dig_schnet_qm9.py --target='r2' --seed=100 --pe='signinv'

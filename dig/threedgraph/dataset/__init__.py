@@ -1,5 +1,7 @@
 from .PygQM93D import QM93D
 from .PygQM93DLapPE import QM9LapPE
+from .PygQM9SimplePCLapPE import QM9SimplePCLapPE
+from .PygQM9SignInv import QM9SignInvLapPE
 from .PygMD17 import MD17
 from .ECdataset import ECdataset
 from .FOLDdataset import FOLDdataset
@@ -9,5 +11,8 @@ __all__ = [
     'QM9LapPE'
     'MD17',
     'ECdataset',
-    'FOLDdataset'
+    'FOLDdataset',
+    'QM9SimplePCLapPE',
+    'QM9SignInvLapPE'
+    
 ]
