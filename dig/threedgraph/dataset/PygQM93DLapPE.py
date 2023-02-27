@@ -46,6 +46,7 @@ class QM9LapPE(InMemoryDataset):
     @property
     def processed_file_names(self):
         return 'qm9_lappe_k_'+str(self.k)+'_cutoff_'+str(self.cutoff)+'.pt'
+        return 'qm9_lappe_k_'+str(self.k)+'_cutoff_'+str(self.cutoff)+'.pt'
         
 
     def get_idx_split(self, data_size, train_size, valid_size, seed):

@@ -24,11 +24,28 @@ run_neptune = neptune.init_run(
 ) 
 '''
 run_neptune = neptune.init_run(
+    project="ahn-group/schnet-3dpe",
+    api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
+) 
+'''
+run_neptune = neptune.init_run(
     project="ahn-group/schnet-qm9-prediction",
     api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
 )  
 '''
 
+        if self.best_score is None:
+            self.best_score = score
+            self.save_checkpoint(val_loss, model)
+        elif score < self.best_score + self.delta:
+            self.counter += 1
+            self.trace_func(f'EarlyStopping counter: {self.counter} out of {self.patience}')
+            if self.counter >= self.patience:
+                self.early_stop = True
+        else:
+            self.best_score = score
+            self.save_checkpoint(val_loss, model)
+            self.counter = 0
 
 class EarlyStopping:
     """Early stops the training if validation loss doesn't improve after a given patience."""
@@ -286,5 +303,6 @@ class run():
             print({'Energy MAE': energy_mae, 'Force MAE': force_mae})
             return energy_mae + p * force_mae
 
+        
         
         return evaluation.eval(input_dict)['mae']
