@@ -15,6 +15,7 @@ parser.add_argument('--seed', type=int, default=42)
 parser.add_argument('--pe', type=str, default=None)
 parser.add_argument('--k', type=int, default=2)
 parser.add_argument('--epoch',type=int, default=300)
+parser.add_argument('--sigma',type=int, default=1)
 
 args = parser.parse_args()
 
@@ -34,7 +35,7 @@ if pe=='lappe' :
 elif pe=='signinv':
         dataset = QM9SignInvLapPE(k=k, cutoff=cutoff)
 elif pe=='simpPC':
-        dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=1)
+        dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=sigma)
 else:
         dataset = QM93D(root='dataset/')
 
