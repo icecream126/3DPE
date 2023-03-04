@@ -11,6 +11,7 @@ from torch_sparse import SparseTensor
 from typing import Optional, Tuple, Union
 
 from torch import Tensor
+import torch.nn.functional as F
 
 from torch_geometric.typing import OptTensor
 from torch_geometric.transforms import Distance
@@ -22,7 +23,10 @@ from scipy import sparse
 import sys
 
 
-sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/embedding')
+# sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/embedding')
+sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/embedding')
+
+
 from GIN import GINDeepSigns
 
 

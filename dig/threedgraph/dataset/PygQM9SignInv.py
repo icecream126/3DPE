@@ -3,8 +3,13 @@
 # from ..positional_encoding.heatkernelpe import HeatKernelEigenvectorPE
 
 import sys
-sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/positional_encoding')
-sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/dataset')
+# sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/positional_encoding')
+# sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/dataset')
+
+sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/positional_encoding')
+sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/dataset')
+
+
 
 from cleanlaplacianpe import CleanLaplacianEigenvectorPE
 from laplacianpe import LaplacianEigenvectorPE

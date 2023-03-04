@@ -3,8 +3,12 @@
 # from ..positional_encoding.heatkernelpe import HeatKernelEigenvectorPE
 
 import sys
-sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/positional_encoding')
-sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/dataset')
+# sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/positional_encoding')
+# sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/dataset')
+
+sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/positional_encoding')
+sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/dataset')
+
 
 from simplepclaplacianpe import SimplePCLaplacianEigenvectorPE
 from PygQM93D import QM93D
@@ -62,10 +66,11 @@ class QM9SimplePCLapPE(InMemoryDataset):
 
 if __name__=="__main__":
     cutoff=10.0
-    sigma=10 # hyperparameter.. # Try 0.01, 1, 10
+    sigma=0.01 # hyperparameter.. # Try 0.01, 1, 10
+    k=4
     origdataset = QM93D()
     data_list = []
-    lappe = SimplePCLaplacianEigenvectorPE(2)
+    lappe = SimplePCLaplacianEigenvectorPE(k=k)
     cnt=1
     for data in origdataset:
         edge_index = radius_graph(data.pos, r=cutoff)
@@ -75,5 +80,5 @@ if __name__=="__main__":
         cnt+=1
 
 
-    dataset = QM9SimplePCLapPE(data_list = data_list, k=2, cutoff=cutoff, sigma=sigma) # Change these parameters as you want
+    dataset = QM9SimplePCLapPE(data_list = data_list, k=k, cutoff=cutoff, sigma=sigma) # Change these parameters as you want
     print(dataset.data)

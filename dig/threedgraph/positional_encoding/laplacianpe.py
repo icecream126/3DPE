@@ -10,6 +10,7 @@ from torch_geometric.utils import (
 from torch_sparse import SparseTensor
 from typing import Optional, Tuple, Union
 
+import torch.nn.functional as F
 from torch import Tensor
 
 from torch_geometric.typing import OptTensor
@@ -19,6 +20,7 @@ from scipy.spatial import distance_matrix
 from scipy.spatial.distance import pdist, squareform
 from scipy.sparse.linalg import eigs
 from scipy import sparse
+
 
 class LaplacianEigenvectorPE():
     r"""Adds the Laplacian eigenvector positional encoding from the

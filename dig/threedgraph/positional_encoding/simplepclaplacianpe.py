@@ -11,6 +11,8 @@ from torch_sparse import SparseTensor
 from typing import Optional, Tuple, Union
 
 from torch import Tensor
+import torch.nn.functional as F
+
 
 from torch_geometric.typing import OptTensor
 from torch_geometric.transforms import Distance
@@ -45,8 +47,8 @@ class SimplePCLaplacianEigenvectorPE():
         L = D-W
         L[L!=L]= 0
         L[L==float("inf")]=10000
-        print('L is nan : ',L.isnan().any())
-        print('L is inf : ',L.isinf().any())
+        # print('L is nan : ',L.isnan().any())
+        # print('L is inf : ',L.isinf().any())
 
         n = pos.shape[0] # number of nodes
 

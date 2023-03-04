@@ -142,8 +142,8 @@ class SchNet(torch.nn.Module):
         self.reset_parameters()
         self.pe = positional_encoding
         if self.pe:
-            self.embedding_pe = nn.Linear(k, hidden_channels, bias=False) # hidden_channels or out_channels?
-            self.embedding_concat = nn.Linear(hidden_channels*2, hidden_channels, bias=False)
+            self.embedding_pe = nn.Linear(k, hidden_channels) # bias False or True? (In case of SignNet bias=True)
+            self.embedding_concat = nn.Linear(hidden_channels*2, hidden_channels)
         self.k=k
         print('SchNet Positional Encoding : ',self.pe)
 

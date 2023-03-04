@@ -35,7 +35,6 @@ elif pe=='signinv':
         dataset = QM9SignInvLapPE(k=k, cutoff=cutoff)
 elif pe=='simpPC':
         dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=1)
-        print('dataset.data.pe.shape : ',dataset.data.pe.shape)
 else:
         dataset = QM93D(root='dataset/')
 
