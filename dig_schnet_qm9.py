@@ -25,6 +25,7 @@ pe = args.pe
 k = args.k
 epoch = args.epoch
 cutoff=10.0
+sigma = args.sigma
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
