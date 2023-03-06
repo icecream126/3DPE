@@ -9,9 +9,17 @@ from torch.autograd import grad
 from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR
 from tqdm import tqdm
+
 # from pytorchtools import EarlyStopping
 
 torch.set_default_tensor_type('torch.cuda.FloatTensor')
+
+# Sigma HyperParam Tuning 
+# sigma_range = torch.logspace(-2,2,steps=10).double().tolist()
+# config_space={
+#     "sigma_range":tune.grid(sigma_range),
+#     "num_gpus":1
+# }
 
 
 
@@ -107,7 +115,7 @@ class run():
     def __init__(self):
         pass
         
-    def run(self, target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k, epochs=500, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50, weight_decay=0, 
+    def run(self, target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,sigma, epochs=500, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50, weight_decay=0, 
         energy_and_force=False, p=100, save_dir='', log_dir=''):
         r"""
         The run script for training and validation.
@@ -141,12 +149,18 @@ class run():
         run_neptune['parameters/epochs']=epochs
         tag_k = 'k='+str(k)
         tag_target = 'target='+target
+        if sigma:
+            tag_sigma='sigma='+sigma
+            run_neptune['parameters/sigma']=sigma
+        else:
+            tag_sigma='sigma=None'
         if pe:
             tag_pe='pe='+pe
         else:
             tag_pe='pe=None'
+        
         tag_seed='seed='+str(seed)
-        run_neptune['sys/tags'].add([tag_k, tag_target, tag_pe, tag_seed])
+        run_neptune['sys/tags'].add([tag_k, tag_target, tag_pe, tag_seed, tag_sigma])
         if pe=='lappe':
             run_neptune['sys/tags'].add('petype=concat')
         elif pe=='signinv':
@@ -211,6 +225,9 @@ class run():
                     print('Saving checkpoint...')
                     checkpoint = {'epoch': epoch, 'model_state_dict': model.state_dict(), 'optimizer_state_dict': optimizer.state_dict(), 'scheduler_state_dict': scheduler.state_dict(), 'best_valid_mae': best_valid, 'num_params': num_params}
                     torch.save(checkpoint, os.path.join(save_dir, 'valid_checkpoint.pt'))
+            
+            # Sigma Hyperparam Tune
+            # tune.report(loss = best_test)
 
             scheduler.step()
             
@@ -218,6 +235,8 @@ class run():
             if early_stopping.early_stop:
                 print('Early Stopping ...')
                 break
+        
+
             
         print(f'Best validation MAE so far: {best_valid}')
         print(f'Test MAE when got best validation result: {best_test}')
