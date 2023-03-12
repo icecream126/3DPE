@@ -1,6 +1,7 @@
 from torch_cluster import radius_graph
 from torch_geometric.nn import GraphConv, GraphNorm
-from torch_geometric.nn.acts import swish
+# from torch_geometric.nn.acts import swish
+from torch_geometric.nn.resolver import swish
 from torch_geometric.nn import inits
 
 from .features import angle_emb, torsion_emb
@@ -238,6 +239,8 @@ class ComENet(nn.Module):
             num_radial=3,
             num_spherical=2,
             num_output_layers=3,
+            positional_encoding=None,
+            k=2
     ):
         super(ComENet, self).__init__()
         self.out_channels = out_channels
