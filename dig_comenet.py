@@ -26,8 +26,8 @@ k = args.k
 epoch = args.epoch
 cutoff=5.0
 sigma = args.sigma
-
-target='r2'
+num_layers=5
+target='gap'
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -56,11 +56,11 @@ print('len(test_dataset) : ',len(test_dataset))
 
 # Define model, loss, and evaluation
 # model = ComENet(energy_and_force=False, cutoff=5.0, num_layers=6, hidden_channels=128, out_channels=1, num_filters=128, num_gaussians=50, positional_encoding=pe, k=k)   
-model = ComENet(cutoff=5.0, num_layers=6, hidden_channels=128, out_channels=1, positional_encoding=pe, k=k)   
+model = ComENet(cutoff=5.0, num_layers=num_layers, hidden_channels=128, out_channels=1, positional_encoding=pe, k=k)   
 loss_func = torch.nn.L1Loss()
 evaluation = ThreeDEvaluator()
 
 # Train and evaluate
 run3d = run()
-run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation,seed, pe,k,sigma,
+run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation,seed, pe,k,sigma,num_layers,
         epochs=epoch, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50)

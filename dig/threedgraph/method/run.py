@@ -123,7 +123,7 @@ class run():
     def __init__(self):
         pass
         
-    def run(self, target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,sigma, epochs=500, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50, weight_decay=0, 
+    def run(self, target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,sigma,num_layers, epochs=500, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50, weight_decay=0, 
         energy_and_force=False, p=100, save_dir='', log_dir=''):
         r"""
         The run script for training and validation.
@@ -150,6 +150,7 @@ class run():
         
         """   
         
+        run_neptune['parameters/num_layers']=num_layers
         run_neptune['parameters/target']=target
         run_neptune['parameters/seed']=seed
         run_neptune['parameters/pe']=pe
@@ -166,9 +167,9 @@ class run():
             tag_pe='pe='+pe
         else:
             tag_pe='pe=None'
-        
+        tag_num_layers = 'num_layers='+str(num_layers)
         tag_seed='seed='+str(seed)
-        run_neptune['sys/tags'].add([tag_k, tag_target, tag_pe, tag_seed, tag_sigma])
+        run_neptune['sys/tags'].add([tag_k, tag_target, tag_pe, tag_seed, tag_sigma, tag_num_layers])
         if pe=='lappe':
             run_neptune['sys/tags'].add('petype=concat')
         elif pe=='signinv':
