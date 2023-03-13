@@ -15,7 +15,7 @@ parser.add_argument('--seed', type=int, default=42)
 parser.add_argument('--pe', type=str, default=None)
 parser.add_argument('--k', type=int, default=2)
 parser.add_argument('--epoch',type=int, default=300)
-parser.add_argument('--sigma',type=str, default=None)
+parser.add_argument('--sigma_idx',type=int, default=None)
 
 args = parser.parse_args()
 
@@ -25,9 +25,16 @@ pe = args.pe
 k = args.k
 epoch = args.epoch
 cutoff=5.0
-sigma = args.sigma
-num_layers=5
-target='gap'
+sigma_idx = args.sigma_idx
+num_layers=3
+target='mu'
+batch_size=16
+
+# sigma_list = torch.logspace(-2,2,steps=10) # not working.. different with actual logspace..
+sigma_list = [0.009999999776482582,0.027825593948364258,0.07742636650800705,0.2154434621334076,0.5994842648506165,1.6681005954742432,4.6415886878967285,12.915496826171875,35.93813705444336,100.0]
+print(sigma_list)
+sigma = sigma_list[sigma_idx]
+print('sigma : ',sigma)
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -45,6 +52,7 @@ else:
 print('dataset : ',dataset)
 print('dataset.data : ',dataset.data)
 print('target : ',target)
+print('batch_size : ',batch_size)
 dataset.data.y = dataset.data[target]
 split_idx = dataset.get_idx_split(len(dataset.data.y), train_size=110000, valid_size=10000, seed=seed)
 train_dataset, valid_dataset, test_dataset = dataset[split_idx['train']], dataset[split_idx['valid']], dataset[split_idx['test']]
@@ -63,4 +71,4 @@ evaluation = ThreeDEvaluator()
 # Train and evaluate
 run3d = run()
 run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation,seed, pe,k,sigma,num_layers,
-        epochs=epoch, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50)
+        epochs=epoch, batch_size=batch_size, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50)

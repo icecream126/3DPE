@@ -156,10 +156,12 @@ class run():
         run_neptune['parameters/pe']=pe
         run_neptune['parameters/k']=k
         run_neptune['parameters/epochs']=epochs
+        run_neptune['parameters/batch_size']=batch_size
+        tag_batch_size = 'batch_size='+str(batch_size)
         tag_k = 'k='+str(k)
         tag_target = 'target='+target
         if sigma:
-            tag_sigma='sigma='+sigma
+            tag_sigma='sigma='+str(sigma)
             run_neptune['parameters/sigma']=sigma
         else:
             tag_sigma='sigma=None'
@@ -169,7 +171,7 @@ class run():
             tag_pe='pe=None'
         tag_num_layers = 'num_layers='+str(num_layers)
         tag_seed='seed='+str(seed)
-        run_neptune['sys/tags'].add([tag_k, tag_target, tag_pe, tag_seed, tag_sigma, tag_num_layers])
+        run_neptune['sys/tags'].add([tag_k, tag_target, tag_pe, tag_seed, tag_sigma, tag_num_layers, tag_batch_size])
         if pe=='lappe':
             run_neptune['sys/tags'].add('petype=concat')
         elif pe=='signinv':
