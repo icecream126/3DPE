@@ -5,6 +5,7 @@ from torch_geometric.data import Data
 
 from torch_geometric.utils import (
     get_laplacian,
+    get_self_loop_attr,
     to_scipy_sparse_matrix,
 )
 from torch_sparse import SparseTensor
@@ -19,6 +20,7 @@ from scipy.spatial import distance_matrix
 from scipy.spatial.distance import pdist, squareform
 from scipy.sparse.linalg import eigs
 from scipy import sparse
+
 
 class RandomWalkPE():
     r"""Adds the random walk positional encoding from the `"Graph Neural
