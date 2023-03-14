@@ -38,12 +38,12 @@ if pe=='lappe' :
 elif pe=='signinv':
         dataset = QM9SignInvLapPE(k=k, cutoff=cutoff)
 elif pe=='simpPC':
-        dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=sigma)
         # sigma_list = torch.logspace(-2,2,steps=10) # not working.. different with actual logspace..
         sigma_list = [0.009999999776482582,0.027825593948364258,0.07742636650800705,0.2154434621334076,0.5994842648506165,1.6681005954742432,4.6415886878967285,12.915496826171875,35.93813705444336,100.0]
-        print(sigma_list)
         sigma = sigma_list[sigma_idx]
         print('sigma : ',sigma)
+        dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=sigma)
+
 elif pe=='rwpe':
         dataset = QM9RWPE(k=k, cutoff=cutoff)
 else:
