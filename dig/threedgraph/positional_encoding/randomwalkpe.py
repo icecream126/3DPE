@@ -50,12 +50,15 @@ class RandomWalkPE():
             num_nodes=num_nodes,
         )
 
-        adj = SparseTensor.from_edge_index(edge_index, edge_weight,
+        adj = SparseTensor.from_edge_index(edge_index,
                                            sparse_sizes=(num_nodes, num_nodes))
+
+
 
         # Compute D^{-1} A:
         deg_inv = 1.0 / adj.sum(dim=1)
         deg_inv[deg_inv == float('inf')] = 0
+        deg_inv[deg_inv==-float('inf')]=0
         adj = adj * deg_inv.view(-1, 1)
 
         out = adj
@@ -66,5 +69,7 @@ class RandomWalkPE():
             row, col, value = out.coo()
             pe_list.append(get_self_loop_attr((row, col), value, num_nodes))
         pe = torch.stack(pe_list, dim=-1)
+        pe[pe==float('inf')]=0
+        pe[pe==-float('inf')]=0
 
         return pe

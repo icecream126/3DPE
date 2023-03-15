@@ -3,11 +3,11 @@
 # from ..positional_encoding.heatkernelpe import HeatKernelEigenvectorPE
 
 import sys
-sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/positional_encoding')
-sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/dataset')
+# sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/positional_encoding')
+# sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/dataset')
 
-# sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/positional_encoding')
-# sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/dataset')
+sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/positional_encoding')
+sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/dataset')
 
 
 from randomwalkpe import RandomWalkPE
@@ -67,23 +67,24 @@ class QM9RWPE(InMemoryDataset):
 
 if __name__=="__main__":
     cutoff=10.0
-    k=5
-    origdataset = QM93D()
-    data_list = []
-    rwpe = RandomWalkPE(walk_length=k)
-    cnt=1
-    for data in origdataset:
-        edge_index = radius_graph(data.pos, r=cutoff)
-        data.pe = rwpe(data.pos.shape[0], edge_index)
-        data_list.append(data)
-        print('Processed # of data : ',cnt,' / ',len(origdataset))
-        cnt+=1
+    k_list = [5,7,9]
+    for k in k_list:
+        origdataset = QM93D()
+        data_list = []
+        rwpe = RandomWalkPE(walk_length=k)
+        cnt=1
+        for data in origdataset:
+            edge_index = radius_graph(data.pos, r=cutoff)
+            data.pe = rwpe(data.pos.shape[0], edge_index)
+            if torch.any(torch.isinf(data.pe)):
+                print('is inf')
+                exit(0)
+            data_list.append(data)
+            print('Processed # of data : ',cnt,' / ',len(origdataset))
+            cnt+=1
 
-
-
-
-    dataset = QM9RWPE(data_list = data_list, k=k, cutoff=cutoff) # Change these parameters as you want
-    print(dataset.data)
+        dataset = QM9RWPE(data_list = data_list, k=k, cutoff=cutoff) # Change these parameters as you want
+        print(dataset.data)
 
 # print(dataset)
 # dataset.process()

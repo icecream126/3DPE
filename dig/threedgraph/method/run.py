@@ -25,18 +25,19 @@ torch.set_default_tensor_type('torch.cuda.FloatTensor')
 
 import neptune.new as neptune
 
-
+'''
 run_neptune = neptune.init_run(
     project="ahn-group/comenet-3dpe",
     api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
 )  
-
 '''
+
+
 run_neptune = neptune.init_run(
     project="ahn-group/schnet-3dpe",
     api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
 ) 
-'''
+
 
 '''
 run_neptune = neptune.init_run(
@@ -157,6 +158,7 @@ class run():
         run_neptune['parameters/k']=k
         run_neptune['parameters/epochs']=epochs
         run_neptune['parameters/batch_size']=batch_size
+        
         tag_batch_size = 'batch_size='+str(batch_size)
         tag_k = 'k='+str(k)
         tag_target = 'target='+target
