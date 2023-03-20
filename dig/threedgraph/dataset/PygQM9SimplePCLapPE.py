@@ -10,6 +10,7 @@ sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/positional_encoding
 sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/dataset')
 
 
+from laplacianpe import LaplacianEigenvectorPE
 from simplepclaplacianpe import SimplePCLaplacianEigenvectorPE
 from PygQM93D import QM93D
 
@@ -70,11 +71,11 @@ if __name__=="__main__":
     k=4
     origdataset = QM93D()
     data_list = []
-    lappe = SimplePCLaplacianEigenvectorPE(k=k)
+    simppcpe = SimplePCLaplacianEigenvectorPE(k=k)
     cnt=1
     for data in origdataset:
         edge_index = radius_graph(data.pos, r=cutoff)
-        data.pe = lappe(data.pos, sigma=sigma)
+        data.pe = simppcpe(data.pos, sigma=sigma, edge_index=edge_index)
         data_list.append(data)
         print('Processed # of data : ',cnt,' / ',len(origdataset))
         cnt+=1

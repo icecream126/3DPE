@@ -69,7 +69,13 @@ class LaplacianEigenvectorPE():
         idx = eigval.argsort()
         eigval, eigvec = eigval[idx], np.real(eigvec[:,idx])
         pe = torch.from_numpy(eigvec[:,1:self.k+1]).float()
-
+        print('Laplacian Matrix')
+        print('eigval')
+        print(eigval)
+        print()
+        print('eigvec')
+        print(eigvec)
+        print()
         if num_nodes <= self.k:
             pe = F.pad(pe, (0, self.k - num_nodes + 1), value=float('0'))
 
