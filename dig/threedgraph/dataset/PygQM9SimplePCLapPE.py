@@ -3,13 +3,14 @@
 # from ..positional_encoding.heatkernelpe import HeatKernelEigenvectorPE
 
 import sys
-# sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/positional_encoding')
-# sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/dataset')
+sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/positional_encoding')
+sys.path.append('/home/hsjang/hmkim/3DPE/dig/threedgraph/dataset')
 
-sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/positional_encoding')
-sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/dataset')
+# sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/positional_encoding')
+# sys.path.append('/home/guest_khm/hyomin/3DPE/dig/threedgraph/dataset')
 
 
+from laplacianpe import LaplacianEigenvectorPE
 from simplepclaplacianpe import SimplePCLaplacianEigenvectorPE
 from PygQM93D import QM93D
 
@@ -44,11 +45,11 @@ class QM9SimplePCLapPE(InMemoryDataset):
 
     @property
     def raw_file_names(self):
-        return 'qm9_simp_PC_lappe_k_'+str(self.k)+'_cutoff_'+str(self.cutoff)+'_sigma_'+str(self.sigma)+'.npz'
+        return 'qm9_simp_PC_cutoff_'+str(self.cutoff)+'_sigma_'+str(self.sigma)+'.npz'
 
     @property
     def processed_file_names(self):
-        return 'qm9_simp_PC_lappe_k_'+str(self.k)+'_cutoff_'+str(self.cutoff)+'_sigma_'+str(self.sigma)+'.pt'
+        return 'qm9_simp_PC_cutoff_'+str(self.cutoff)+'_sigma_'+str(self.sigma)+'.pt'
         
 
     def get_idx_split(self, data_size, train_size, valid_size, seed):
@@ -57,28 +58,30 @@ class QM9SimplePCLapPE(InMemoryDataset):
         split_dict = {'train':train_idx, 'valid':val_idx, 'test':test_idx}
         return split_dict
 
-    
+    '''
     def process(self):
         data, slices = self.collate(data_list)
-        print('Saving lappe with k = '+str(self.k)+' and cutoff = '+str(self.cutoff)+'...')
+        print('Saving simple pc with k = '+str(self.k)+' and cutoff = '+str(self.cutoff)+'...')
         torch.save((data, slices), self.processed_paths[0])
-    
+    '''
 
 if __name__=="__main__":
     cutoff=10.0
-    sigma=0.01 # hyperparameter.. # Try 0.01, 1, 10
-    k=4
+    # sigma=0.01 # hyperparameter.. # Try 0.01, 1, 10
+    k=2
     origdataset = QM93D()
     data_list = []
-    lappe = SimplePCLaplacianEigenvectorPE(k=k)
+    simppcpe = SimplePCLaplacianEigenvectorPE(k=k)
     cnt=1
-    for data in origdataset:
-        edge_index = radius_graph(data.pos, r=cutoff)
-        data.pe = lappe(data.pos, sigma=sigma)
-        data_list.append(data)
-        print('Processed # of data : ',cnt,' / ',len(origdataset))
-        cnt+=1
+    sigma_list = [0.1, 1, 100]
+    for sigma in sigma_list:
+        for data in origdataset:
+            edge_index = radius_graph(data.pos, r=cutoff)
+            data.pe = simppcpe(data.pos, sigma=sigma, edge_index=edge_index)
+            data_list.append(data)
+            print('Processed # of data : ',cnt,' / ',len(origdataset))
+            cnt+=1
 
 
-    dataset = QM9SimplePCLapPE(data_list = data_list, k=k, cutoff=cutoff, sigma=sigma) # Change these parameters as you want
-    print(dataset.data)
+        dataset = QM9SimplePCLapPE(data_list = data_list, k=k, cutoff=cutoff, sigma=sigma) # Change these parameters as you want
+        print(dataset.data)

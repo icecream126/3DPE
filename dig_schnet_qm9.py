@@ -15,7 +15,7 @@ parser.add_argument('--seed', type=int, default=42)
 parser.add_argument('--pe', type=str, default=None)
 parser.add_argument('--k', type=int, default=2)
 parser.add_argument('--epoch',type=int, default=300)
-parser.add_argument('--sigma_idx',type=int, default=None)
+parser.add_argument('--sigma_idx',type=int, default=0)
 
 args = parser.parse_args()
 
@@ -38,12 +38,12 @@ if pe=='lappe' :
 elif pe=='signinv':
         dataset = QM9SignInvLapPE(k=k, cutoff=cutoff)
 elif pe=='simpPC':
-        dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=sigma)
         # sigma_list = torch.logspace(-2,2,steps=10) # not working.. different with actual logspace..
         sigma_list = [0.009999999776482582,0.027825593948364258,0.07742636650800705,0.2154434621334076,0.5994842648506165,1.6681005954742432,4.6415886878967285,12.915496826171875,35.93813705444336,100.0]
-        print(sigma_list)
         sigma = sigma_list[sigma_idx]
         print('sigma : ',sigma)
+        dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=sigma)
+
 elif pe=='rwpe':
         dataset = QM9RWPE(k=k, cutoff=cutoff)
 else:
@@ -51,6 +51,12 @@ else:
 
 print('dataset : ',dataset)
 print('dataset.data : ',dataset.data)
+# print('dataset.data.pe : ',dataset.data.pe)
+# print('max pe : ',torch.max(dataset.data.pe))
+# print('min pe : ',torch.min(dataset.data.pe))
+# print('top k pe : ',torch.topk(torch.unique(torch.flatten(dataset.data.pe)), k=10))
+# exit(0)
+
 dataset.data.y = dataset.data[target]
 split_idx = dataset.get_idx_split(len(dataset.data.y), train_size=110000, valid_size=10000, seed=seed)
 train_dataset, valid_dataset, test_dataset = dataset[split_idx['train']], dataset[split_idx['valid']], dataset[split_idx['test']]

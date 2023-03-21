@@ -15,7 +15,7 @@ parser.add_argument('--seed', type=int, default=42)
 parser.add_argument('--pe', type=str, default=None)
 parser.add_argument('--k', type=int, default=2)
 parser.add_argument('--epoch',type=int, default=300)
-parser.add_argument('--sigma_idx',type=int, default=None)
+parser.add_argument('--sigma',type=float, default=10)
 
 args = parser.parse_args()
 
@@ -25,21 +25,24 @@ pe = args.pe
 k = args.k
 epoch = args.epoch
 cutoff=5.0
-sigma_idx = args.sigma_idx
-num_layers=3
-target='mu'
-batch_size=16
+sigma = args.sigma
+if sigma !=0.1:
+        sigma=int(sigma)
+num_layers=4
+batch_size=32
 
 # sigma_list = torch.logspace(-2,2,steps=10) # not working.. different with actual logspace..
-sigma_list = [0.009999999776482582,0.027825593948364258,0.07742636650800705,0.2154434621334076,0.5994842648506165,1.6681005954742432,4.6415886878967285,12.915496826171875,35.93813705444336,100.0]
-print(sigma_list)
-sigma = sigma_list[sigma_idx]
-print('sigma : ',sigma)
+# sigma_list = [0.009999999776482582,0.027825593948364258,0.07742636650800705,0.2154434621334076,0.5994842648506165,1.6681005954742432,4.6415886878967285,12.915496826171875,35.93813705444336,100.0]
+# print(sigma_list)
+# sigma = sigma_list[sigma_idx]
+# print('sigma : ',sigma)
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print('Using device : ',device)
 
+if pe!='simpPC':
+        sigma=None
 if pe=='lappe' :
         dataset = QM9LapPE(k=k, cutoff=cutoff)
 elif pe=='signinv':
@@ -64,7 +67,7 @@ print('len(test_dataset) : ',len(test_dataset))
 
 # Define model, loss, and evaluation
 # model = ComENet(energy_and_force=False, cutoff=5.0, num_layers=6, hidden_channels=128, out_channels=1, num_filters=128, num_gaussians=50, positional_encoding=pe, k=k)   
-model = ComENet(cutoff=5.0, num_layers=num_layers, hidden_channels=128, out_channels=1, positional_encoding=pe, k=k)   
+model = ComENet(cutoff=5.0, middle_channels=32, hidden_channels=128, num_spherical=2, num_layers=num_layers, num_radial=3, out_channels=1, positional_encoding=pe, k=k)   
 loss_func = torch.nn.L1Loss()
 evaluation = ThreeDEvaluator()
 
