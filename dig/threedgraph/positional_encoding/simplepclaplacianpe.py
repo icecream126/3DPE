@@ -23,6 +23,8 @@ from scipy.sparse.linalg import eigs
 from scipy import sparse
 from scipy.linalg import expm
 
+import sys
+
 class SimplePCLaplacianEigenvectorPE():
     def __init__(
         self,
@@ -46,7 +48,9 @@ class SimplePCLaplacianEigenvectorPE():
         # Finally construct laplacian matrix from weighted adjacency matrix
         L = D-W
         L[L!=L]= 0
-        L[L==float("inf")]=10000
+        L = torch.nan_to_num(L)
+        L[L==float("Inf")]=sys.float_info.max
+        L[L==float('nan')]=0
         # print('L is nan : ',L.isnan().any())
         # print('L is inf : ',L.isinf().any())
 
