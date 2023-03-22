@@ -321,7 +321,7 @@ class SphereNet(torch.nn.Module):
         z, pos, batch = batch_data.z, batch_data.pos, batch_data.batch
         if self.energy_and_force:
             pos.requires_grad_()
-        edge_index = radius_graph(pos, r=self.cutoff, batch=batch) # why edge_index is calculated again for batch? Is it same as calculating edge_index for each graph?
+        edge_index = radius_graph(pos, r=self.cutoff, batch=batch) 
         num_nodes=z.size(0)
         
         dist, angle, torsion, i, j, idx_kj, idx_ji = xyz_to_dat(pos, edge_index, num_nodes, use_torsion=True)
