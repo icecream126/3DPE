@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from torch.nn import Linear, Embedding
-from torch_geometric.nn.acts import swish
+from torch_geometric.nn.resolver import swish
 from torch_geometric.nn.inits import glorot_orthogonal
 from torch_geometric.nn import radius_graph
 from torch_scatter import scatter
@@ -278,6 +278,10 @@ class SphereNet(torch.nn.Module):
         act=swish, output_init='GlorotOrthogonal', use_node_features=True, positional_encoding=None, k=2):
         super(SphereNet, self).__init__()
 
+        self.hidden_channels=hidden_channels
+        self.out_channels=out_channels
+        self.out_emb_channels=out_emb_channels
+
         self.cutoff = cutoff
         self.energy_and_force = energy_and_force
 
@@ -295,7 +299,9 @@ class SphereNet(torch.nn.Module):
         self.update_us = torch.nn.ModuleList([update_u() for _ in range(num_layers)])
         self.pe = positional_encoding
         if self.pe :
-            self.embedding_pe = nn.Linear(k, out_channels)
+            self.embedding_pe = nn.Linear(k, hidden_channels)
+            self.embedding_concat = nn.Linear(hidden_channels+out_channels, hidden_channels)
+
         self.k = k
         print('SphereNet Positional Encoding : ',self.pe)
 
@@ -329,11 +335,18 @@ class SphereNet(torch.nn.Module):
 
         if self.pe:
             v_pos_enc = self.embedding_pe(batch_data.pe.float())
-            print('v_pos_enc.shape  : ',v_pos_enc.shape) # torch.Size([568, 1])
-            print('v.shape : ',v.shape) # torch.Size([568, 1])
-            # v = torch.cat((v, v_pos_enc), dim=1) # torch.Size([568, 2]) => should be torch.add...
-            v = torch.add(v, v_pos_enc)
-            print('after added v shape : ',v.shape)
+            # print('v_pos_enc.shape  : ',v_pos_enc.shape) # torch.Size([568, 1])
+            # print('v.shape : ',v.shape) # torch.Size([568, 1])
+            # print('hidden_channels : ',self.hidden_channels)
+            # print('output_emb : ',self.out_emb_channels)
+            # print('out_channels ; ',self.out_channels)
+            # print('v_pos_enc : ',v_pos_enc.shape)
+            # print('v : ',v.shape)
+            concat = torch.cat((v,v_pos_enc),dim=1)
+            # print('concat : ',concat.shape)
+            v = self.embedding_concat(torch.cat((v, v_pos_enc), dim=1)) # torch.Size([568, 2]) => should be torch.add...
+            # v = torch.add(v, v_pos_enc)
+            # print('after added v shape : ',v.shape)
 
 
         # Update edge, node, graph features
