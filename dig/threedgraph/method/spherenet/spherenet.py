@@ -296,6 +296,8 @@ class SphereNet(torch.nn.Module):
         self.pe = positional_encoding
         if self.pe :
             self.embedding_pe = nn.Linear(k, out_channels)
+            self.embedding_concat = nn.Linear(hidden_channels*2, hidden_channels)
+
         self.k = k
         print('SphereNet Positional Encoding : ',self.pe)
 
@@ -329,11 +331,11 @@ class SphereNet(torch.nn.Module):
 
         if self.pe:
             v_pos_enc = self.embedding_pe(batch_data.pe.float())
-            print('v_pos_enc.shape  : ',v_pos_enc.shape) # torch.Size([568, 1])
-            print('v.shape : ',v.shape) # torch.Size([568, 1])
-            # v = torch.cat((v, v_pos_enc), dim=1) # torch.Size([568, 2]) => should be torch.add...
-            v = torch.add(v, v_pos_enc)
-            print('after added v shape : ',v.shape)
+            # print('v_pos_enc.shape  : ',v_pos_enc.shape) # torch.Size([568, 1])
+            # print('v.shape : ',v.shape) # torch.Size([568, 1])
+            v = self.embedding_concat(torch.cat((v, v_pos_enc), dim=1)) # torch.Size([568, 2]) => should be torch.add...
+            # v = torch.add(v, v_pos_enc)
+            # print('after added v shape : ',v.shape)
 
 
         # Update edge, node, graph features

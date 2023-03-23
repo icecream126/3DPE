@@ -27,9 +27,15 @@ import neptune.new as neptune
 
 
 run_neptune = neptune.init_run(
+    project="ahn-group/spherenet-3dpe",
+    api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
+)  # your credentials
+'''
+run_neptune = neptune.init_run(
     project="ahn-group/comenet-3dpe",
     api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiZGIwM2Y1ZC1jODdiLTRkMDItYWUxNy0yZjRiMmEzMDJjY2MifQ==",
 )  
+'''
 
 '''
 run_neptune = neptune.init_run(

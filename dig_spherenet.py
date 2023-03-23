@@ -16,6 +16,7 @@ parser.add_argument('--seed', type=int, default=42)
 parser.add_argument('--pe', type=str, default=None)
 parser.add_argument('--k', type=int, default=2)
 
+
 args = parser.parse_args()
 
 target = args.target # targets = ['mu', 'alpha', 'homo', 'lumo', 'gap', 'r2', 'zpve', 'U0', 'U', 'H', 'G', 'Cv']
@@ -54,4 +55,4 @@ evaluation = ThreeDEvaluator()
 # Train and evaluate
 run3d = run()
 run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,
-        epochs=20, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=15)
+        epochs=300, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50)
