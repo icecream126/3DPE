@@ -230,7 +230,7 @@ class DimeNetPP(torch.nn.Module):
         hidden_channels=128, out_channels=1, int_emb_size=64, basis_emb_size=8, out_emb_channels=256, 
         num_spherical=7, num_radial=6, envelope_exponent=5, 
         num_before_skip=1, num_after_skip=2, num_output_layers=3, 
-        act=swish, output_init='GlorotOrthogonal'):
+        act=swish, output_init='GlorotOrthogonal', positional_encoding=None, k=2):
         super(DimeNetPP, self).__init__()
 
         self.cutoff = cutoff
@@ -253,6 +253,13 @@ class DimeNetPP(torch.nn.Module):
             )
             for _ in range(num_layers)
         ])
+
+        self.pe=positional_encoding
+        
+        if self.pe:
+            self.embedding_pe = nn.Linear(k, hidden_channels) # bias False or True? (In case of SignNet bias=True)
+            self.embedding_concat = nn.Linear(hidden_channels*2, hidden_channels)
+        
 
         self.update_us = torch.nn.ModuleList([update_u() for _ in range(num_layers)])
 
@@ -282,6 +289,14 @@ class DimeNetPP(torch.nn.Module):
         e = self.init_e(z, emb, i, j)
         v = self.init_v(e, i)
         u = self.init_u(torch.zeros_like(scatter(v, batch, dim=0)), v, batch) #scatter(v, batch, dim=0)
+
+        if self.pe:
+            v_pos_enc = self.embedding_pe(batch_data.pe.float())
+            # print('v_pos_enc.shape  : ',v_pos_enc.shape) # torch.Size([568, 1])
+            # print('v.shape : ',v.shape) # torch.Size([568, 1])
+            v = self.embedding_concat(torch.cat((v, v_pos_enc), dim=1)) # torch.Size([568, 2]) => should be torch.add...
+            # v = torch.add(v, v_pos_enc)
+            # print('after added v shape : ',v.shape)
 
         for update_e, update_v, update_u in zip(self.update_es, self.update_vs, self.update_us):
             e = update_e(e, emb, idx_kj, idx_ji)
