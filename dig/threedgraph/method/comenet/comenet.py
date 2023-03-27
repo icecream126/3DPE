@@ -278,6 +278,13 @@ class ComENet(nn.Module):
             self.lins.append(Linear(hidden_channels, hidden_channels))
         self.lin_out = Linear(hidden_channels, out_channels)
         self.reset_parameters()
+        
+        self.pe = positional_encoding
+        if self.pe :
+            self.embedding_pe = nn.Linear(k, hidden_channels)
+            self.embedding_concat = nn.Linear(hidden_channels*2, hidden_channels)
+
+        self.k = k
 
     def reset_parameters(self):
         self.emb.reset_parameters()
@@ -301,7 +308,11 @@ class ComENet(nn.Module):
 
         # Embedding block.
         x = self.emb(z)
-
+        if self.pe:
+            x_pos_enc = self.embedding_pe(data.pe.float())
+            concat = torch.cat((x, x_pos_enc), dim=1)
+            x=self.embedding_concat(torch.cat((x,x_pos_enc),dim=1))
+            
         # Calculate distances.
         _, argmin0 = scatter_min(dist, i, dim_size=num_nodes)
         argmin0[argmin0 >= len(i)] = 0
