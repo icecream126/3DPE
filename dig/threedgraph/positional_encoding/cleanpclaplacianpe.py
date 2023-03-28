@@ -26,7 +26,7 @@ from scipy.linalg import expm
 
 import sys
 
-class SimplePCLaplacianEigenvectorPE():
+class CleanPCLaplacianEigenvectorPE():
     def __init__(
         self,
         k: int,
@@ -46,7 +46,8 @@ class SimplePCLaplacianEigenvectorPE():
         Dist = squareform(pdist(pos))
         pos = pos.cuda()
         W = torch.tensor(expm(-Dist/(2*sigma**2))) # w_ij = e^{-||x_i-x_j||^2 / 2\sigma^2} # matrix exponential
-        W = torch.mul(W, A) # apply cutoff(if edge not connected, set 0, and if edge connected, set weighted edge value)
+        # Without Applying Cutoff
+        # W = torch.mul(W, A) # apply cutoff(if edge not connected, set 0, and if edge connected, set weighted edge value)
         D = torch.diag(torch.sum(W,1))
         
         
@@ -92,9 +93,9 @@ if __name__=='__main__':
     for sigma in sigma_list:
         # print('pos')
         # print(pos)
-        simpPC = SimplePCLaplacianEigenvectorPE(k=k)
+        cleanPC = CleanPCLaplacianEigenvectorPE(k=k)
         # print('sigma :',sigma)
-        pe = simpPC(pos=pos, sigma=sigma,edge_index = edge_index)
+        pe = cleanPC(pos=pos, sigma=sigma,edge_index = edge_index)
         # print()
 
     # lappe = LaplacianEigenvectorPE(k=k)

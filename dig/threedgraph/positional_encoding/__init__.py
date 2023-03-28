@@ -3,6 +3,7 @@ from .heatkernelpe import HeatKernelEigenvectorPE
 from .laplacianpe import LaplacianEigenvectorPE
 from .cleanlaplacianpe import CleanLaplacianEigenvectorPE
 from .simplepclaplacianpe import SimplePCLaplacianEigenvectorPE
+from .cleanpclaplacianpe import CleanPCLaplacianEigenvectorPE
 from .hmrpe import HMRPE
 
 __all__ = [
@@ -11,6 +12,7 @@ __all__ = [
     'LaplacianEigenvectorPE',
     'CleanLaplacianEigenvectorPE',
     'SimplePCLaplacianEigenvectorPE',
+    'CleanPCLaplacianEigenvectorPE',
     'HMRPE'
 ]
 

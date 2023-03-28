@@ -1,4 +1,4 @@
-from dig.threedgraph.dataset import QM93D, QM9LapPE, QM9SimplePCLapPE, QM9SignInvLapPE, QM9RWPE
+from dig.threedgraph.dataset import QM93D, QM9LapPE, QM9SimplePCLapPE, QM9SignInvLapPE, QM9RWPE, QM9CleanPCLapPE
 from dig.threedgraph.method import ComENet
 from dig.threedgraph.evaluation import ThreeDEvaluator
 from dig.threedgraph.method import run
@@ -32,17 +32,11 @@ num_layers=4
 batch_size=32
 seed=50
 
-# sigma_list = torch.logspace(-2,2,steps=10) # not working.. different with actual logspace..
-# sigma_list = [0.009999999776482582,0.027825593948364258,0.07742636650800705,0.2154434621334076,0.5994842648506165,1.6681005954742432,4.6415886878967285,12.915496826171875,35.93813705444336,100.0]
-# print(sigma_list)
-# sigma = sigma_list[sigma_idx]
-# print('sigma : ',sigma)
-
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print('Using device : ',device)
 
-if pe!='simpPC':
+if pe!='simpPC' and pe!='cleanPC':
         sigma=None
 if pe=='lappe' :
         dataset = QM9LapPE(k=k, cutoff=cutoff)
@@ -52,9 +46,12 @@ elif pe=='simpPC':
         dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=sigma)
 elif pe=='rwpe':
         dataset = QM9RWPE(k=k, cutoff=cutoff)
+elif pe=='cleanPC':
+        dataset = QM9CleanPCLapPE(k=k, cutoff=cutoff, sigma=sigma)
 else:
         dataset = QM93D(root='dataset/')
 
+print('pe : ',pe)
 print('dataset : ',dataset)
 print('dataset.data : ',dataset.data)
 print('target : ',target)

@@ -1,4 +1,4 @@
-from dig.threedgraph.dataset import QM93D
+from dig.threedgraph.dataset import QM93D, QM9LapPE, QM9SimplePCLapPE, QM9SignInvLapPE, QM9RWPE, QM9CleanPCLapPE
 from dig.threedgraph.method import SphereNet
 from dig.threedgraph.evaluation import ThreeDEvaluator
 from dig.threedgraph.method import run
@@ -15,6 +15,8 @@ parser.add_argument('--target', type=str, default='mu')
 parser.add_argument('--seed', type=int, default=42)
 parser.add_argument('--pe', type=str, default=None)
 parser.add_argument('--k', type=int, default=2)
+parser.add_argument('--epoch',type=int, default=300)
+parser.add_argument('--sigma',type=float, default=10)
 
 
 args = parser.parse_args()
@@ -25,14 +27,39 @@ pe = args.pe
 k = args.k
 
 cutoff=5.0
+sigma = args.sigma
+if sigma !=0.1:
+        sigma=int(sigma)
+num_layers=4
+batch_size=32
+seed=42
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Load the dataset and split
-dataset = QM93D(root='dataset/')
 
-if pe is not None:
-        dataset = positional_encoding(dataset, pe, k, cutoff)
+
+if pe!='simpPC' and pe!='cleanPC':
+        sigma=None
+if pe=='lappe' :
+        dataset = QM9LapPE(k=k, cutoff=cutoff)
+elif pe=='signinv':
+        dataset = QM9SignInvLapPE(k=k, cutoff=cutoff)
+elif pe=='simpPC':
+        dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=sigma)
+elif pe=='rwpe':
+        dataset = QM9RWPE(k=k, cutoff=cutoff)
+elif pe=='cleanPC':
+        dataset = QM9CleanPCLapPE(k=k, cutoff=cutoff, sigma=sigma)
+else:
+        dataset = QM93D(root='dataset/')
+        
+print('pe : ',pe)
+print('dataset : ',dataset)
+print('dataset.data : ',dataset.data)
+print('target : ',target)
+print('batch_size : ',batch_size)
+
 dataset.data.y = dataset.data[target]
 split_idx = dataset.get_idx_split(len(dataset.data.y), train_size=110000, valid_size=10000, seed=seed)
 train_dataset, valid_dataset, test_dataset = dataset[split_idx['train']], dataset[split_idx['valid']], dataset[split_idx['test']]
@@ -54,5 +81,5 @@ evaluation = ThreeDEvaluator()
 
 # Train and evaluate
 run3d = run()
-run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,
+run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,sigma, num_layers,
         epochs=300, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50)
