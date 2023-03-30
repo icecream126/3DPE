@@ -69,7 +69,11 @@ print('len(test_dataset) : ',len(test_dataset))
 
 # Define model, loss, and evaluation
 # model = ComENet(energy_and_force=False, cutoff=5.0, num_layers=6, hidden_channels=128, out_channels=1, num_filters=128, num_gaussians=50, positional_encoding=pe, k=k)   
-model = ComENet(cutoff=5.0, middle_channels=32, hidden_channels=128, num_spherical=7, num_layers=num_layers, num_radial=6, out_channels=1, positional_encoding=pe, k=k)   
+model = DimeNetPP(energy_and_force=False, cutoff=5.0, num_layers=4, 
+        hidden_channels=128, out_channels=1, int_emb_size=64, basis_emb_size=8, out_emb_channels=256, 
+        num_spherical=7, num_radial=6, envelope_exponent=5, 
+        num_before_skip=1, num_after_skip=2, num_output_layers=3, 
+        act=swish, output_init='GlorotOrthogonal', positional_encoding=None, k=2)   
 loss_func = torch.nn.L1Loss()
 evaluation = ThreeDEvaluator()
 
