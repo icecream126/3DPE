@@ -1,4 +1,4 @@
-from dig.threedgraph.dataset import QM93D, QM9LapPE, QM9SimplePCLapPE, QM9SignInvLapPE, QM9RWPE, QM9CleanPCLapPE
+from dig.threedgraph.dataset import QM93D, QM9LapPE, QM9SimplePCLapPE, QM9SignInvLapPE, QM9RWPE, QM9CleanPCLapPE, QM9LapEigConst, QM9LapEigEig, QM9LapEigSinCos, QM9EigPE,QM9SimpPCLapEigConst,QM9SimpPCLapEigEig,QM9SimpPCLapEigSinCos,QM9SimpPCEig
 from dig.threedgraph.method import SchNet
 from dig.threedgraph.evaluation import ThreeDEvaluator
 from dig.threedgraph.method import run
@@ -41,9 +41,24 @@ elif pe=='simpPC':
         if sigma!=0.1:
                 sigma=int(sigma)
         dataset = QM9SimplePCLapPE(k=k, cutoff=cutoff, sigma=sigma)
-
 elif pe=='rwpe':
         dataset = QM9RWPE(k=k, cutoff=cutoff)
+elif pe=='eigpe':
+        dataset = QM9EigPE(cutoff=cutoff)
+elif pe=='lapeigconst':
+        dataset = QM9LapEigConst(k=k, cutoff=cutoff)
+elif pe=='lapeigeig':
+        dataset = QM9LapEigEig(k=k, cutoff=cutoff)
+elif pe=='lapeigsincos':
+        dataset = QM9LapEigSinCos(k=k, cutoff=cutoff)
+elif pe=='simpPCeigpe':
+        dataset = QM9SimpPCEig(k=k,cutoff=cutoff, sigma=sigma)
+elif pe=='simpPCeigconst':
+        dataset = QM9SimpPCLapEigConst(k=k, cutoff=cutoff, sigma=sigma)
+elif pe=='simpPCeigeig':
+        dataset = QM9SimpPCLapEigEig(k=k, cutoff=cutoff, sigma=sigma)
+elif pe=='simpPCeigsincos':
+        dataset = QM9SimpPCLapEigSinCos(k=k, cutoff=cutoff, sigma=sigma)
 elif pe=='cleanPC':
         if sigma!=0.1:
                 sigma=int(sigma)

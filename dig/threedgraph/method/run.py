@@ -76,7 +76,7 @@ class run():
     def __init__(self):
         pass
         
-    def run(self, target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,sigma,num_layers, epochs=500, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50, weight_decay=0, 
+    def run(self, target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,sigma,num_layers, hidden_channels, num_spherical, lr, epochs=500, batch_size=32, vt_batch_size=32,  lr_decay_factor=0.5, lr_decay_step_size=50, weight_decay=0, 
         energy_and_force=False, p=100, save_dir='', log_dir=''):
         r"""
         The run script for training and validation.
@@ -117,6 +117,9 @@ class run():
         run_neptune['parameters/k']=k
         run_neptune['parameters/epochs']=epochs
         run_neptune['parameters/batch_size']=batch_size
+        run_neptune['parameters/hidden_channels']=hidden_channels
+        run_neptune['parameters/num_spherical']=num_spherical
+        run_neptune['parameters/lr']=lr
         tag_batch_size = 'batch_size='+str(batch_size)
         tag_k = 'k='+str(k)
         tag_target = 'target='+target

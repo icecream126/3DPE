@@ -15,8 +15,13 @@ parser.add_argument('--target', type=str, default='mu')
 parser.add_argument('--seed', type=int, default=42)
 parser.add_argument('--pe', type=str, default=None)
 parser.add_argument('--k', type=int, default=2)
-parser.add_argument('--epoch',type=int, default=300)
-parser.add_argument('--sigma',type=float, default=10)
+parser.add_argument('--epochs',type=int, default=300)
+parser.add_argument('--sigma',type=int, default=10)
+parser.add_argument('--num_layers',type=int, default=4)
+parser.add_argument('--batch_size',type=int, default=32)
+parser.add_argument('--lr',type=float, default=0.0005)
+parser.add_argument('--num_spherical',type=int, default=3)
+parser.add_argument('--hidden_channels',type=int, default=128)
 
 
 args = parser.parse_args()
@@ -25,14 +30,14 @@ target = args.target # targets = ['mu', 'alpha', 'homo', 'lumo', 'gap', 'r2', 'z
 seed = args.seed
 pe = args.pe
 k = args.k
-
+epochs=args.epochs
 cutoff=5.0
 sigma = args.sigma
-if sigma !=0.1:
-        sigma=int(sigma)
-num_layers=4
-batch_size=32
-seed=42
+num_layers = args.num_layers
+batch_size=args.batch_size
+lr = args.lr
+num_spherical = args.num_spherical
+hidden_channels=args.hidden_channels
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -71,15 +76,15 @@ print('len(test_dataset) : ',len(test_dataset))
 
 
 # Define model, loss, and evaluation
-model = SphereNet(energy_and_force=False, cutoff=5.0, num_layers=4,
-                hidden_channels=128, out_channels=1, int_emb_size=64,
+model = SphereNet(energy_and_force=False, cutoff=5.0,
+                 out_channels=1, int_emb_size=64,
                 basis_emb_size_dist=8, basis_emb_size_angle=8, basis_emb_size_torsion=8, out_emb_channels=256,
-                num_spherical=3, num_radial=6, envelope_exponent=5,
-                num_before_skip=1, num_after_skip=2, num_output_layers=3, positional_encoding=pe, k=k)                 
+                 num_radial=6, envelope_exponent=5,
+                num_before_skip=1, num_after_skip=2, num_output_layers=3, positional_encoding=pe, k=k,hidden_channels=hidden_channels,num_spherical=num_spherical, num_layers=num_layers)                 
 loss_func = torch.nn.L1Loss()
 evaluation = ThreeDEvaluator()
 
 # Train and evaluate
 run3d = run()
-run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,sigma, num_layers,
-        epochs=300, batch_size=32, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50)
+run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation, seed, pe,k,sigma, num_layers,hidden_channels,num_spherical,lr,
+        epochs=epochs, batch_size=batch_size, vt_batch_size=32, lr_decay_factor=0.5, lr_decay_step_size=50)

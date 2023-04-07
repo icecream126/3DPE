@@ -14,8 +14,13 @@ parser.add_argument('--target', type=str, default='mu')
 parser.add_argument('--seed', type=int, default=42)
 parser.add_argument('--pe', type=str, default=None)
 parser.add_argument('--k', type=int, default=2)
-parser.add_argument('--epoch',type=int, default=300)
+parser.add_argument('--epochs',type=int, default=300)
 parser.add_argument('--sigma',type=float, default=10)
+parser.add_argument('--num_layers',type=int, default=4)
+parser.add_argument('--batch_size',type=int, default=32)
+parser.add_argument('--lr',type=float, default=0.0005)
+parser.add_argument('--num_spherical',type=int, default=7)
+parser.add_argument('--hidden_channels',type=int, default=128)
 
 args = parser.parse_args()
 
@@ -23,14 +28,14 @@ target = args.target # targets = ['mu', 'alpha', 'homo', 'lumo', 'gap', 'r2', 'z
 seed = args.seed
 pe = args.pe
 k = args.k
-epoch = args.epoch
+epochs = args.epochs
 cutoff=5.0
 sigma = args.sigma
-if sigma !=0.1:
-        sigma=int(sigma)
-num_layers=4
-batch_size=32
-seed=50
+num_layers = args.num_layers
+batch_size=args.batch_size
+lr = args.lr
+num_spherical = args.num_spherical
+hidden_channels=args.hidden_channels
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -66,12 +71,11 @@ print('len(test_dataset) : ',len(test_dataset))
 
 
 # Define model, loss, and evaluation
-# model = ComENet(energy_and_force=False, cutoff=5.0, num_layers=6, hidden_channels=128, out_channels=1, num_filters=128, num_gaussians=50, positional_encoding=pe, k=k)   
-model = ComENet(cutoff=5.0, middle_channels=32, hidden_channels=128, num_spherical=2, num_layers=num_layers, num_radial=3, out_channels=1, positional_encoding=pe, k=k)   
+model = ComENet(cutoff=5.0, middle_channels=32, hidden_channels=hidden_channels, num_spherical=num_spherical, num_layers=num_layers, num_radial=3, out_channels=1, positional_encoding=pe, k=k)   
 loss_func = torch.nn.L1Loss()
 evaluation = ThreeDEvaluator()
 
 # Train and evaluate
 run3d = run()
-run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation,seed, pe,k,sigma,num_layers,
-        epochs=epoch, batch_size=batch_size, vt_batch_size=32, lr=0.0005, lr_decay_factor=0.5, lr_decay_step_size=50)
+run3d.run(target, device, train_dataset, valid_dataset, test_dataset, model, loss_func, evaluation,seed, pe,k,sigma,num_layers,hidden_channels,num_spherical,lr,
+        epochs=epochs, batch_size=batch_size, vt_batch_size=32, lr_decay_factor=0.5, lr_decay_step_size=50)
